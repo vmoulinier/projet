@@ -1,0 +1,67 @@
+.center {
+    text-align: center;
+}
+.blue {
+    color : #204d74;
+}
+.red {
+    color : #ac2925;
+}
+.green {
+    color : #449d44;
+}
+.bold {
+    font-weight: bold;
+}
+/*RECHERCHE*/
+.glyphicon.glyphicon-heart.active {
+    color : #ac2925;
+}
+.glyphicon.glyphicon-user.active {
+    color : #ffcd0e;
+}
+.hover-fav {
+    float: right;
+}
+.hover-fav:hover {
+    font-size: 1.05em;
+    text-shadow: 0px 0px 10px rgb(158, 200, 212);
+}
+.hover-grp {
+    float: right;
+}
+.hover-grp:hover {
+    font-size: 1.05em;
+    text-shadow: 0px 0px 10px rgb(158, 200, 212);
+}
+.pointer {
+    cursor: pointer;
+}
+.display {
+    display: none;
+}
+.user-container {
+    padding: 175px 15px;
+}
+.list-group-item.active {
+    background-color: #f03250!important;
+    border-color: #f03250!important;
+}
+.btn-profil {
+    width: 250px;
+    margin-bottom: 15px;
+}
+.nav-link {
+    color: #707070;
+}
+.list-group {
+    font-size: 15px;
+}
+.list-group-item {
+    padding: .5rem 1rem!important;
+}
+@media only screen and (max-width: 767px) {
+    .user-container {
+        padding: 140px 15px;
+    }
+}

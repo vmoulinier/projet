@@ -1,0 +1,13 @@
+Options -Indexes
+
+RewriteEngine On
+
+RewriteRule "^([a-z0-9-_/]+)$" "index.php?$1" [L,QSA]
+
+<Files ~ "\.(json|lock)$">
+   Deny from all
+</Files>
+<Files "cli-config.php">
+  Order Allow,Deny
+  Deny from all
+</Files>
