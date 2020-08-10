@@ -48,13 +48,13 @@
                         <h4>Gallery</h4>
                         <div class="listing__details__gallery__pic">
                             <div class="listing__details__gallery__item">
-                                <img class="listing__details__gallery__item__large" style="height: 333px"
+                                <img class="listing__details__gallery__item__large" <?php if($this->twig->isMobile()): ?>style="height: 350px"<?php else: ?>style="height: 450px"<?php endif; ?>
                                      src="<?= $advert->getLinkFirstPictures() ?>" alt="">
                                 <span><i class="fa fa-camera"></i> <?= count($pictures) ?> <?= $this->twig->translation('view.images') ?></span>
                             </div>
                             <div class="listing__details__gallery__slider owl-carousel">
                                 <?php foreach ($pictures as $picture): ?>
-                                    <img <?php if($this->twig->isMobile()): ?>style="height: 65px"<?php else: ?>style="height: 90px"<?php endif; ?> id="<?= $picture->getId() ?>" data-imgbigurl="<?= PATH . UPLOAD_PATH . $picture->getName() ?>" src="<?= PATH . UPLOAD_PATH . $picture->getName() ?>" alt="">
+                                    <img <?php if($this->twig->isMobile()): ?>style="height: 65px"<?php else: ?>style="height: 120px"<?php endif; ?> id="<?= $picture->getId() ?>" data-imgbigurl="<?= $picture->getLink() ?>" src="<?= $picture->getLink() ?>" alt="">
                                 <?php endforeach; ?>
                             </div>
                         </div>

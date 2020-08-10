@@ -46,9 +46,4 @@ class Config
         $this->helper = $fb->getRedirectLoginHelper();
         $this->fb = $fb;
     }
-
-    public function getEntityManager()
-    {
-        return $this->entityManager;
-    }
 }
