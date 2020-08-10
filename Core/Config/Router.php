@@ -47,6 +47,8 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/advert/[i:id]', 'advert/viewadvert', 'advert_view_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert');
         $this->router->map('POST', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert_post');
     }
 
     public function targets()

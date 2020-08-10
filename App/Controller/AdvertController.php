@@ -115,9 +115,64 @@ class AdvertController extends Controller
         }
 
         $form = new TemplateForm();
-        $advertsCategories = $advertRepo->findAllCategoryAdverts();
+        $advertsCategories = $categoryRepo->findAll();
         $expeditionTypes = $expeditionRepo->findAll();
 
         $this->render('advert/create', compact('form', 'advertsCategories', 'expeditionTypes'));
+    }
+
+    public function edit(array $params)
+    {
+        if (isset($params['id'])) {
+            $this->template = 'user';
+            $user = $this->getCurrentUser();
+
+            if(!$user){
+                $this->redirect('user_login');
+            }
+
+            $advertRepo = $this->services->getRepository('advert');
+            $categoryRepo = $this->services->getRepository('category');
+            $pictureRepo = $this->services->getRepository('picture');
+            $advert = $advertRepo->find($params['id']);
+
+            if ($advert && $advert->getUser() === $user) {
+                $expeditionRepo = $this->services->getRepository('expeditionType');
+                if ('POST' === $this->request->getMethod()) {
+                    if ($this->request->get('submit')) {
+                        $title = $this->request->get('title');
+                        $category = $categoryRepo->find($this->request->get('category'));
+                        $price = $this->request->get('price');
+                        $description = $this->request->get('description');
+                        $brand = $this->request->get('brand');
+                        $shape = $this->request->get('shape');
+                        $purchasedat = new \DateTime($this->request->get('purchasedat'));
+                        $expeditiontype = $expeditionRepo->find($this->request->get('expeditiontype'));
+                        $guarantee = $this->request->get('guarantee');
+                        $advertRepo->update($advert, $title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
+                        $this->addFlashBag('Success, but need to validate');
+                    }
+
+                    if ($this->request->get('rotation')) {
+                        $rotation = $this->request->get('rotation');
+                        $picture = $pictureRepo->find($this->request->get('img'));
+                        $pictureRepo->rotate($picture, $rotation);
+                    }
+
+                    if ($this->request->get('delete')) {
+                        $picture = $pictureRepo->find($this->request->get('delete'));
+                        $pictureRepo->delete($picture);
+                    }
+
+                }
+
+                $form = new TemplateForm();
+                $advertsCategories = $categoryRepo->findAll();
+                $expeditionTypes = $expeditionRepo->findAll();
+                $pictures = $pictureRepo->findBy(['advert' => $advert]);
+                $this->render('advert/edit', compact('form', 'advertsCategories', 'expeditionTypes', 'advert', 'pictures'));
+            }
+        }
+        $this->denied();
     }
 }

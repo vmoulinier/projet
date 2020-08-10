@@ -348,6 +348,6 @@ class Advert
     public function getLinkFirstPictures(): string
     {
         $pictures = $this->getPictures();
-        return PATH . UPLOAD_PATH . $this->getUser()->getId() . '/' . $pictures[0]->getName();
+        return PATH . '/' . UPLOAD_PATH . $this->getUser()->getId() . '/' . $pictures[0]->getName();
     }
 }

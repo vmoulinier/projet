@@ -15,7 +15,7 @@ class Picture
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Advert", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="Advert")
      */
     private $advert;
 
@@ -104,6 +104,11 @@ class Picture
 
     public function getLink(): string
     {
-        return PATH . UPLOAD_PATH . $this->getAdvert()->getUser()->getId() . '/' . $this->getName();
+        return PATH . '/' . UPLOAD_PATH . $this->getAdvert()->getUser()->getId() . '/' . $this->getName();
+    }
+
+    public function getRelLink(): string
+    {
+        return UPLOAD_PATH . $this->getAdvert()->getUser()->getId() . '/' . $this->getName();
     }
 }

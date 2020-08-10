@@ -10,7 +10,7 @@
             <select name="category" required>
                 <option value=""><?= $this->twig->translation('advert.index.choose.categories') ?></option>
                 <?php foreach ($advertsCategories as $advertsCategorie): ?>
-                    <option <?= $this->twig->isSelected('category', $advertsCategorie->getCategory()->getId()) ?> value="<?= $advertsCategorie->getCategory()->getId() ?>"><?= $advertsCategorie->getCategory()->getLabel() ?></option>
+                    <option <?= $this->twig->isSelected('category', $advertsCategorie->getId()) ?> value="<?= $advertsCategorie->getId() ?>"><?= $advertsCategorie->getLabel() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

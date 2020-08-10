@@ -32,7 +32,7 @@
                 <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['profil']) ?>" href="<?= $this->router->generate('user_profil') ?>">
                     <?= $this->twig->translation('user.nav.profil') ?>
                 </a>
-                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_adverts', 'create_advert']) ?>" href="<?= $this->router->generate('user_adverts') ?>">
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_adverts', 'create_advert', 'edit_advert']) ?>" href="<?= $this->router->generate('user_adverts') ?>">
                     <?= $this->twig->translation('user.nav.adverts') ?>
                 </a>
                 <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['bookmarks']) ?>" href="<?= $this->router->generate('user_bookmarks') ?>">
