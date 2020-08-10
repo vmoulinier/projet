@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="<?= PATH ?>/Public/css/theme/style.css" type="text/css">
     <link rel="stylesheet" href="<?= PATH ?>/Public/css/jquery.rateyo.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.6/css/flag-icon.min.css" type="text/css">
+    <link href="<?=PATH?>/Public/css/fileinput.css" rel="stylesheet">
+    <link href="<?=PATH?>/Public/css/fileinput-rtl.css" rel="stylesheet">
     <script src="<?= PATH ?>/Public/js/theme/jquery-3.3.1.min.js"></script>
     <script src="https://kit.fontawesome.com/d92432fce9.js" crossorigin="anonymous"></script>
 </head>

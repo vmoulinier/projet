@@ -49,9 +49,9 @@ class Picture
     }
 
     /**
-     * @return mixed
+     * @return Advert
      */
-    public function getAdvert()
+    public function getAdvert(): Advert
     {
         return $this->advert;
     }
@@ -104,6 +104,6 @@ class Picture
 
     public function getLink(): string
     {
-        return PATH . UPLOAD_PATH . $this->getName();
+        return PATH . UPLOAD_PATH . $this->getAdvert()->getUser()->getId() . '/' . $this->getName();
     }
 }

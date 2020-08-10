@@ -221,6 +221,18 @@ ol {
 	text-align: center;
 }
 
+#flashbag-user {
+	position: absolute;
+	z-index: 10;
+	margin-top: 10px;
+	width: 100%;
+	text-align: center;
+}
+
+.alert {
+	padding: 7px!important;
+}
+
 /* Preloder */
 
 #preloder {
@@ -668,7 +680,7 @@ ol {
 	box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.1);
 	position: relative;
 	overflow: hidden;
-	padding: 60px 30px 30px 30px;
+	padding: 65px 30px 30px 30px;
 	border-radius: 5px;
 	margin-bottom: 30px;
 	background: #ffffff;
@@ -1141,6 +1153,12 @@ ol {
 	margin-bottom: 18px;
 }
 
+.create-advert .nice-select {
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 1em;
+}
+
 .filter__select .nice-select {
 	width: 100%;
 	border: none;
@@ -1532,7 +1550,7 @@ ol {
 .listing__item__text {
 	padding-left: 30px;
 	padding-right: 30px;
-	padding-top: 40px;
+	padding-top: 30px;
 }
 
 .listing__item__text__inside h5 {

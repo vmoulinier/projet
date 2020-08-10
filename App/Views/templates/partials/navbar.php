@@ -23,7 +23,7 @@
                                 </a>
                             </li>
                             <li class="<?php if(empty($_GET)): ?>active<?php endif; ?>"><a href="<?= $this->router->generate('index') ?>"><?= $this->twig->translation('home.index') ?></a></li>
-                            <li class="<?= $this->twig->isNavActive('advert') ?>"><a href="#"><?= $this->twig->translation('advert.index') ?></a>
+                            <li class="<?= $this->twig->isNavActive(['advert']) ?>"><a href="#"><?= $this->twig->translation('advert.index') ?></a>
                                 <ul class="dropdown">
                                     <li><a href="<?= $this->router->generate('advert_index') ?>"><?= $this->twig->translation('advert.list.advert') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('advert.list.ask') ?></a></li>

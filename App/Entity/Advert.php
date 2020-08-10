@@ -68,12 +68,12 @@ class Advert
     private $type;
 
     /**
-     * @ManyToOne(targetEntity="Category", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="Category", inversedBy="advert")
      */
     private $category;
 
     /**
-     * @ManyToOne(targetEntity="ExpeditionType", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="ExpeditionType", inversedBy="advert")
      */
     private $expeditionType;
 
@@ -83,7 +83,7 @@ class Advert
     private $views = 0;
 
     /**
-     * @ManyToOne(targetEntity="User", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="User", inversedBy="advert")
      */
     private $user;
 
@@ -207,7 +207,7 @@ class Advert
      * @param bool $guarantee
      * @return Advert
      */
-    public function setGuarantee(bool $guarantee): Advert
+    public function setGuarantee(?bool $guarantee): Advert
     {
         $this->guarantee = $guarantee;
         return $this;
@@ -348,6 +348,6 @@ class Advert
     public function getLinkFirstPictures(): string
     {
         $pictures = $this->getPictures();
-        return PATH . UPLOAD_PATH . $pictures[0]->getName();
+        return PATH . UPLOAD_PATH . $this->getUser()->getId() . '/' . $pictures[0]->getName();
     }
 }

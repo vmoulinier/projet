@@ -29,7 +29,7 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
         $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
         $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
-        $this->router->map('GET', '/'.PROJECT_NAME.'/youradverts', 'user/adverts', 'user_adverts');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts');
         $this->router->map('GET', '/'.PROJECT_NAME.'/bookmarks', 'user/bookmarks', 'user_bookmarks');
 
         //admin
@@ -45,6 +45,8 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/adverts', 'advert/index', 'advert_index_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/advert/[i:id]', 'advert/viewadvert', 'advert_view');
         $this->router->map('POST', '/'.PROJECT_NAME.'/advert/[i:id]', 'advert/viewadvert', 'advert_view_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert_post');
     }
 
     public function targets()

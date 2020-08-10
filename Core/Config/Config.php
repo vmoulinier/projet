@@ -47,4 +47,8 @@ class Config
         $this->fb = $fb;
     }
 
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
 }

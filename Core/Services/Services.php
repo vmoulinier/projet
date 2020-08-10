@@ -36,7 +36,7 @@ class Services extends Config
     {
         if (class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';
-            return new $repository();
+            return new $repository($this);
         }
 
         throw new \Error('repository not found');
@@ -67,4 +67,62 @@ class Services extends Config
         }
     }
 
+    public function processPictures(string $fileName): array
+    {
+        $arrayNames = [];
+        $name = array_key_first($_FILES);
+        if ($_FILES[$name]['error'][0] == 0) {
+            $extensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
+
+            $dir = "Public/img/" . $fileName . "/";
+            if (!is_dir($dir)) {
+                $old = umask(0);
+                mkdir($dir, 0777);
+                chmod($dir, 0777);
+                umask($old);
+            }
+
+            foreach ($_FILES[$name]['name'] as $key => $filename) {
+                $file = $_FILES[$name]['tmp_name'][$key];
+                $extension = strrchr($filename, '.');
+                if (!in_array($extension, $extensions)) {
+                    break;
+                }
+                $size = getimagesize($_FILES[$name]['tmp_name'][$key]);
+                if ($size[0] > 600 && strtolower($extension) !== '.jpg') {
+                    $newwidth = 600;
+                    $newheight = ($size[1] / $size[0]) * $newwidth;
+                    $thumb = imagecreatetruecolor($newwidth, $newheight);
+                    switch ($extension) {
+                        case ".jpeg" :
+                        case ".JPEG" :
+                            $source = imagecreatefromjpeg($file);
+                            break;
+                        case ".png" :
+                        case ".PNG" :
+                            $source = imagecreatefrompng($file);
+                            break;
+                    }
+                    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $size[0], $size[1]);
+
+                    switch ($extension) {
+                        case ".jpeg" :
+                        case ".JPEG" :
+                            imagejpeg($thumb, $file, 100);
+                            break;
+                        case ".png" :
+                        case ".PNG" :
+                            imagepng($thumb, $file, 9);
+                            break;
+                    }
+                }
+
+                $newFileName = uniqid() . $extension;
+                move_uploaded_file($file, $dir . $newFileName);
+                $arrayNames[] = $newFileName;
+            }
+        }
+
+        return $arrayNames;
+    }
 }

@@ -6,9 +6,6 @@
 </div>
 
 <?php require_once 'App/Views/templates/partials/navbar-user.php'; ?>
-<?php if($flashBag): ?>
-    <?php require_once 'App/Views/templates/partials/flashbag.php'; ?>
-<?php endif; ?>
 
 <div class="container user-container">
     <div class="row">
@@ -32,13 +29,13 @@
         <?php else: ?>
         <div class="col-md-3">
             <div class="list-group mb-2">
-                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive('profil') ?>" href="<?= $this->router->generate('user_profil') ?>">
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['profil']) ?>" href="<?= $this->router->generate('user_profil') ?>">
                     <?= $this->twig->translation('user.nav.profil') ?>
                 </a>
-                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive('youradverts') ?>" href="<?= $this->router->generate('user_adverts') ?>">
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_adverts', 'create_advert']) ?>" href="<?= $this->router->generate('user_adverts') ?>">
                     <?= $this->twig->translation('user.nav.adverts') ?>
                 </a>
-                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive('bookmarks') ?>" href="<?= $this->router->generate('user_bookmarks') ?>">
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['bookmarks']) ?>" href="<?= $this->router->generate('user_bookmarks') ?>">
                     <?= $this->twig->translation('user.nav.bookmarks') ?>
                 </a>
                 <a class="list-group-item list-group-item-action" href="<?= $this->router->generate('user_profil') ?>">
@@ -51,6 +48,9 @@
         </div>
         <?php endif; ?>
         <div class="col-md-9">
+            <?php if($flashBag): ?>
+                <?php require_once 'App/Views/templates/partials/flashbag-user.php'; ?>
+            <?php endif; ?>
             <div class="work__item">
                 <?= $content; ?>
             </div>

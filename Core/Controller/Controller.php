@@ -4,6 +4,7 @@ namespace Core\Controller;
 
 use App\Entity\User;
 use App\Model\Repository;
+use Core\Config\Config;
 use Core\Services\Services;
 use Core\Services\Twig;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +29,8 @@ class Controller {
         $this->path = 'App/Views/';
         $this->template = 'default';
         $this->title = PROJECT_NAME;
-        $this->repository = new Repository();
         $this->services = new Services();
+        $this->repository = new Repository($this->services);
         $this->doctrine = $this->services->getDoctrine();
         $this->twig = new Twig();
         $this->router = $router;
@@ -76,7 +77,9 @@ class Controller {
     {
         if(!empty($_POST)) {
             foreach ($_POST as $key => $data) {
-                $_POST[$key] = htmlspecialchars($data);
+                if (!is_array($data)) {
+                    $_POST[$key] = htmlspecialchars($data);
+                }
             }
         }
     }

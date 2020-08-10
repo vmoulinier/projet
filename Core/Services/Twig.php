@@ -93,12 +93,14 @@ class Twig extends Config
         return $this->entityManager->getRepository('App\Entity\Bookmark')->findOneBy(['user' => $this->getCurrentUser(), 'advert' => $advert]);
     }
 
-    public function isNavActive($url)
+    public function isNavActive(array $urls)
     {
         $get = explode('/', array_key_first ($_GET))[0];
 
-        if(isset($get) && $get === $url) {
-            return 'active';
+        foreach ($urls as $url) {
+            if(isset($get) && $get === $url) {
+                return 'active';
+            }
         }
 
         return '';

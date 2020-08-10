@@ -2,6 +2,13 @@
 
 namespace App\Model;
 
+use App\Entity\Advert;
+use App\Entity\Category;
+use App\Entity\ExpeditionType;
+use App\Entity\Picture;
+use App\Entity\User;
+use Core\Services\Services;
+
 class AdvertRepository extends Repository
 {
     public function findAllCategoryAdverts()
@@ -48,5 +55,42 @@ class AdvertRepository extends Repository
         }
 
         return $res->orderBy('a.id', 'DESC')->getQuery()->getResult();
+    }
+
+    public function create(string $title, Category $category, User $user, int $price, string $description, string $brand, string $shape, \DateTime $purchasedat, ExpeditionType $expeditiontype, ?string $guarantee = null): void
+    {
+        $advert = new Advert();
+        $advert->setTitle($title) ;
+        $advert->setCategory($category) ;
+        $advert->setUser($user);
+        $advert->setPrice($price);
+        $advert->setDescription($description);
+        $advert->setBrand($brand);
+        $advert->setShape($shape);
+        $advert->setPurchasedAt($purchasedat);
+        $advert->setExpeditionType($expeditiontype);
+        $advert->setGuarantee(0);
+        if ($guarantee) {
+            $advert->setGuarantee(1);
+        }
+        $advert->setType(1);
+        $advert->setCreatedAt(new \DateTime());
+
+        $this->entityManager->getDoctrine()->persist($advert);
+
+        if(!empty($_FILES)) {
+            $services = new Services();
+            $arrayNames = $services->processPictures(DIR_ADVERT . '/' . $user->getId());
+            foreach ($arrayNames as $arrayName) {
+                $picture = new Picture();
+                $picture->setAdvert($advert);
+                $picture->setName($arrayName);
+                $picture->setCreatedAt(new \DateTime());
+                $this->entityManager->getDoctrine()->persist($picture);
+            }
+        }
+
+        $this->entityManager->getDoctrine()->flush();
+
     }
 }

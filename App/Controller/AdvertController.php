@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use Core\Controller\Controller;
+use Core\HTML\TemplateForm;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
@@ -83,5 +84,40 @@ class AdvertController extends Controller
             }
         }
         $this->denied();
+    }
+
+    public function create()
+    {
+        $this->template = 'user';
+        $user = $this->getCurrentUser();
+
+        if(!$user){
+            $this->redirect('user_login');
+        }
+
+        $advertRepo = $this->services->getRepository('advert');
+        $expeditionRepo = $this->services->getRepository('expeditionType');
+        $categoryRepo = $this->services->getRepository('category');
+
+        if ('POST' === $this->request->getMethod()) {
+            $title = $this->request->get('title');
+            $category = $categoryRepo->find($this->request->get('category'));
+            $price = $this->request->get('price');
+            $description = $this->request->get('description');
+            $brand = $this->request->get('brand');
+            $shape = $this->request->get('shape');
+            $purchasedat = new \DateTime($this->request->get('purchasedat'));
+            $expeditiontype = $expeditionRepo->find($this->request->get('expeditiontype'));
+            $guarantee = $this->request->get('guarantee');
+            $advertRepo->create($title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
+
+            $this->addFlashBag('Success, but need to validate');
+        }
+
+        $form = new TemplateForm();
+        $advertsCategories = $advertRepo->findAllCategoryAdverts();
+        $expeditionTypes = $expeditionRepo->findAll();
+
+        $this->render('advert/create', compact('form', 'advertsCategories', 'expeditionTypes'));
     }
 }
