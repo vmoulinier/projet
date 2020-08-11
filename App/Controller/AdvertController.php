@@ -17,7 +17,7 @@ class AdvertController extends Controller
         $advertRepo = $this->services->getRepository('advert');
         $advertsCategories = $this->services->getRepository('advert')->findAllCategoryAdverts();
         $usersLocations = $this->services->getRepository('user')->findAllPostcodeUsers();
-        $adverts = $advertRepo->findAll();
+        $adverts = $advertRepo->findBy(['locked' => 0]);
 
         if ('POST' === $this->request->getMethod()) {
             $limit = $this->request->get('limit');
@@ -26,7 +26,7 @@ class AdvertController extends Controller
             if (isset($limit, $start)) {
 
                 if (!$this->request->get('search')) {
-                    $adverts = $advertRepo->findBy([], null, $limit, $start);
+                    $adverts = $advertRepo->findBy(['locked' => 0], null, $limit, $start);
                 }
 
                 if ($this->request->get('search')) {

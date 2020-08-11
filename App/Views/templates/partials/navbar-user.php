@@ -30,7 +30,7 @@
                                     <li><a href="#"><?= $this->twig->translation('advert.lastest.sales') ?></a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Aide</a>
+                            <li><a href="#"><?= $this->twig->translation('home.help') ?></a>
                                 <ul class="dropdown">
                                     <li><a href="#"><?= $this->twig->translation('help.hiw') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('footer.terms') ?></a></li>

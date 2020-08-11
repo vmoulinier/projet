@@ -122,6 +122,13 @@ class UserController extends Controller
                     die;
                 }
             }
+            if ($this->request->get('locked')) {
+                $advert = $advertRepo->find($this->request->get('locked'));
+                if ($advert->getUser() === $user) {
+                    $advertRepo->lock($advert);
+                    die;
+                }
+            }
         }
 
         $this->render('user/adverts', compact('adverts'));

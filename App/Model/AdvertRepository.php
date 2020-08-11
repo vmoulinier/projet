@@ -24,7 +24,7 @@ class AdvertRepository extends Repository
     public function search(?string $name, ?string $category, ?string $location, $price, $limit = null, $start = null): array
     {
         $queryBuilder = $this->entityRepository->createQueryBuilder('a');
-        $res = $queryBuilder->select('a');
+        $res = $queryBuilder->select('a')->where('a.lock = 0');
 
         if ($name) {
             $res->andWhere('a.title LIKE :name')
@@ -133,6 +133,13 @@ class AdvertRepository extends Repository
     public function delete(Advert $advert): void
     {
         $this->entityManager->getDoctrine()->remove($advert);
+        $this->entityManager->getDoctrine()->flush();
+    }
+
+    public function lock(Advert $advert): void
+    {
+        ($advert->getLocked()) ? $advert->setLocked(0) : $advert->setLocked(1);
+        $this->entityManager->getDoctrine()->persist($advert);
         $this->entityManager->getDoctrine()->flush();
     }
 }

@@ -7,7 +7,11 @@
         <div class="col-md-4 p-0 ">
             <div class="listing__item m-2">
                 <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
-                    <div class="listing__item__pic__tag pointer view-advt bg-success"><?= $this->twig->translation('user.advert.lock') ?></div>
+                    <?php if($advert->getLocked()): ?>
+                    <div class="listing__item__pic__tag pointer view-advt bg-secondary" id="lock<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.unlock') ?></div>
+                    <?php else: ?>
+                        <div class="listing__item__pic__tag pointer view-advt bg-success" id="lock<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.lock') ?></div>
+                    <?php endif; ?>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.urgent') ?></div>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.up') ?></div>
                     <div class="listing__item__pic__tag pointer view-advt" id="delete<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.delete') ?></div>
@@ -39,11 +43,22 @@
                 ({
                     data: {"delete": <?= $advert->getId() ?>},
                     type: 'post',
-                    success: function (data) {
-                        console.log(data);
+                    success: function () {
+                        location.reload();
                     }
                 });
             }
+        });
+        $('#lock<?= $advert->getId() ?>').click(function() {
+            $.ajax
+            ({
+                data: {"locked": <?= $advert->getId() ?>},
+                type: 'post',
+                success: function (data) {
+                    console.log(data);
+                    location.reload();
+                }
+            });
         });
     </script>
     <?php endforeach; ?>

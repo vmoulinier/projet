@@ -88,6 +88,12 @@ class Advert
     private $user;
 
     /**
+     * @Column(type="integer", nullable=false)
+     * @var int
+     */
+    private $locked = 0;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -336,6 +342,24 @@ class Advert
     public function setViews(int $views): Advert
     {
         $this->views = $views;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLocked(): int
+    {
+        return $this->locked;
+    }
+
+    /**
+     * @param int $locked
+     * @return Advert
+     */
+    public function setLocked(int $locked): Advert
+    {
+        $this->locked = $locked;
         return $this;
     }
 
