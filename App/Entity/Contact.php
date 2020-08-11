@@ -39,7 +39,7 @@ class Contact
     private $country;
 
     /**
-     * @ManyToOne(targetEntity="User", cascade={"all"}, fetch="EAGER")
+     * @ManyToOne(targetEntity="User", fetch="EAGER")
      */
     private $user;
 

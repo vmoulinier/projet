@@ -30,6 +30,7 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/loginfb/[a:fb]?', 'user/loginfb', 'user_loginfb');
         $this->router->map('GET', '/'.PROJECT_NAME.'/profil', 'user/profil', 'user_profil');
         $this->router->map('GET', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/bookmarks', 'user/bookmarks', 'user_bookmarks');
 
         //admin

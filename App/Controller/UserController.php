@@ -114,6 +114,16 @@ class UserController extends Controller
         $advertRepo = $this->services->getRepository('advert');
         $adverts = $advertRepo->findBy(['user' => $user]);
 
+        if('POST' === $this->request->getMethod()) {
+            if ($this->request->get('delete')) {
+                $advert = $advertRepo->find($this->request->get('delete'));
+                if ($advert->getUser() === $user) {
+                    $advertRepo->delete($advert);
+                    die;
+                }
+            }
+        }
+
         $this->render('user/adverts', compact('adverts'));
     }
 

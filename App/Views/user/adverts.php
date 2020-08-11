@@ -6,11 +6,11 @@
     <?php foreach ($adverts as $advert): ?>
         <div class="col-md-4 p-0 ">
             <div class="listing__item m-2">
-                <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
+                <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
                     <div class="listing__item__pic__tag pointer view-advt bg-success"><?= $this->twig->translation('user.advert.lock') ?></div>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.urgent') ?></div>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.up') ?></div>
-                    <div class="listing__item__pic__tag pointer view-advt"><?= $this->twig->translation('user.advert.delete') ?></div>
+                    <div class="listing__item__pic__tag pointer view-advt" id="delete<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.delete') ?></div>
                     <div class="listing__item__pic__btns">
                         <a class="btns-advt" href="<?= $this->router->generate("edit_advert", ["id" => $advert->getId()]) ?>" target="_blank"><span class="icon_tool green"></span></a>
                     </div>
@@ -32,5 +32,19 @@
                 </div>
             </div>
         </div>
+    <script>
+        $('#delete<?= $advert->getId() ?>').click(function() {
+            if(confirm('Delete ?')) {
+                $.ajax
+                ({
+                    data: {"delete": <?= $advert->getId() ?>},
+                    type: 'post',
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+        });
+    </script>
     <?php endforeach; ?>
 </div>

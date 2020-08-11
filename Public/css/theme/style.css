@@ -429,6 +429,9 @@ ol {
 	-o-transition: all, 0.3s;
 	transition: all, 0.3s;
 }
+.header__menu ul li ul a:after {
+	background: rgba(255, 255, 255, 0);
+}
 
 .header__menu__right {
 	display: inline-block;

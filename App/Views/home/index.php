@@ -71,7 +71,7 @@
                             <?php foreach ($premiumAdverts as $advert): ?>
                                 <div class="col-lg-3 col-md-6">
                                     <div class="listing__item">
-                                        <div class="listing__item__pic set-bg h-200" data-setbg="<?php if($advert->getPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
+                                        <div class="listing__item__pic set-bg h-200" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
                                             <div class="listing__item__pic__tag pointer" onclick="window.open('<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>')"><?= $advert->getCategory()->getLabel() ?></div>
                                             <div class="listing__item__pic__btns">
                                                 <a href="<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>" target="_blank"><span class="icon_zoom-in_alt"></span></a>

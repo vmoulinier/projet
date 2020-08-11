@@ -15,7 +15,8 @@ class Picture
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Advert")
+     * @ManyToOne(targetEntity="Advert", inversedBy="picture")
+     * @JoinColumn(name="advert_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $advert;
 

@@ -128,6 +128,11 @@ class AdvertRepository extends Repository
         }
 
         $this->entityManager->getDoctrine()->flush();
+    }
 
+    public function delete(Advert $advert): void
+    {
+        $this->entityManager->getDoctrine()->remove($advert);
+        $this->entityManager->getDoctrine()->flush();
     }
 }

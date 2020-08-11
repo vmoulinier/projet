@@ -339,7 +339,7 @@ class Advert
         return $this;
     }
 
-    public function getPictures(): array
+    public function getAdvertPictures(): array
     {
         $service = new Services();
         return $service->getRepository('picture')->findBy(['advert' => $this]);
@@ -347,7 +347,7 @@ class Advert
 
     public function getLinkFirstPictures(): string
     {
-        $pictures = $this->getPictures();
+        $pictures = $this->getAdvertPictures();
         return PATH . '/' . UPLOAD_PATH . $this->getUser()->getId() . '/' . $pictures[0]->getName();
     }
 }
