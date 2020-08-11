@@ -16,13 +16,13 @@ class Bookmark
 
     /**
      * @ManyToOne(targetEntity="User", inversedBy="bookmark")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $user;
 
     /**
      * @ManyToOne(targetEntity="Advert", inversedBy="bookmark")
-     * @JoinColumn(name="advert_id", referencedColumnName="id")
+     * @JoinColumn(name="advert_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $advert;
 

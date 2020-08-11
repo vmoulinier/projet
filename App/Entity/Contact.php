@@ -40,6 +40,7 @@ class Contact
 
     /**
      * @ManyToOne(targetEntity="User", fetch="EAGER")
+     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $user;
 

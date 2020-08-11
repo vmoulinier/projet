@@ -34,13 +34,13 @@ class Question
 
     /**
      * @ManyToOne(targetEntity="Advert", inversedBy="question")
-     * @JoinColumn(name="advert_id", referencedColumnName="id")
+     * @JoinColumn(name="advert_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $advert;
 
     /**
      * @ManyToOne(targetEntity="User", inversedBy="question")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $user;
 

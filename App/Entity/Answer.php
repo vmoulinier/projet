@@ -32,7 +32,7 @@ class Answer
 
     /**
      * @ManyToOne(targetEntity="Question", inversedBy="answer")
-     * @JoinColumn(name="question_id", referencedColumnName="id")
+     * @JoinColumn(name="question_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $question;
 
