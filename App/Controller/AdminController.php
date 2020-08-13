@@ -8,13 +8,13 @@ class AdminController extends Controller
 {
     public function __construct(\AltoRouter $router)
     {
+        parent::__construct($router);
         //if is not logged admin, then acces denied in env prod
         if (ENV === 'prod') {
             if(!$this->twig->loggedAdmin()){
                 $this->denied();
             }
         }
-        parent::__construct($router);
     }
 
     public function index()

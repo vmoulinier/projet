@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Model\Repository;
 use Core\Services\Services;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class Service
 {
@@ -29,7 +30,10 @@ class Service
         return $this->services->getService($name);
     }
 
-    public function getRepository(string $entity): Repository
+    /**
+     * @return Repository|EntityRepository
+     */
+    public function getRepository(string $entity)
     {
         return $this->services->getRepository($entity);
     }

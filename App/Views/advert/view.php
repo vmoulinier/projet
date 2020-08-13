@@ -19,6 +19,12 @@
                             <div><?= $this->twig->translation('view.review') ?></div>
                         </div>
                         <p><span class="icon_pin_alt"></span> <?= $advert->getUser()->getPostCode() ?>, <?= $advert->getUser()->getCountry() ?></p>
+                        <?php if($this->twig->logged() && $this->twig->getCurrentUser() !== $advert->getUser()): ?>
+                        <form method="POST" action="<?= $this->router->generate("transaction_creation_post") ?>">
+                            <?= $form->input('advert', $advert->getId(), ['type' => 'hidden']); ?>
+                            <?= $form->submit($this->twig->translation('advert.buy')); ?>
+                        </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -156,12 +156,10 @@ ol {
 	background: black;
 	opacity: 0.5;
 }
-
 .spad {
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
-
 .spad-sm {
 	padding-top: 50px;
 	padding-bottom: 50px;
@@ -170,7 +168,6 @@ ol {
 	padding-top: 150px;
 	padding-bottom: 50px;
 }
-
 .text-white h1,
 .text-white h2,
 .text-white h3,

@@ -50,6 +50,10 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert');
         $this->router->map('POST', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert_post');
+
+        //transaction
+        $this->router->map('POST', '/'.PROJECT_NAME.'/creation', 'transaction/creation', 'transaction_creation_post');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/validation', 'transaction/validation', 'transaction_validation_post');
     }
 
     public function targets()

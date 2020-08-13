@@ -1,45 +1,43 @@
-<div class="test">
-    <section class="hero set-bg" data-setbg="<?= PATH ?>/Public/img/app_bg2.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-1">
-                    <div class="hero__text">
-                        <div class="section-title">
-                            <h2 class="center"><?= $this->twig->translation('index.title') ?></h2>
-                        </div>
-                        <div class="hero__search__form">
-                            <form method="GET" action="<?= $this->router->generate('advert_index') ?>">
-                                <input type="text" placeholder="<?= $this->twig->translation('advert.index.search') ?>" name="name">
-                                <div class="select__option">
-                                    <select name="category">
-                                        <option value=""><?= $this->twig->translation('advert.index.choose.categories') ?></option>
-                                        <?php foreach ($advertsCategories as $advertsCategorie): ?>
-                                            <option value="<?= $advertsCategorie->getCategory()->getId() ?>"><?= $advertsCategorie->getCategory()->getLabel() ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="select__option">
-                                    <select name="location">
-                                        <option value=""><?= $this->twig->translation('advert.index.choose.location') ?></option>
-                                        <?php foreach ($usersLocations as $usersLocation): ?>
-                                            <option value="<?= $usersLocation->getPostCode() ?>"><?= $usersLocation->getPostCode() ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <button type="submit" name="search" value="1"><?= $this->twig->translation('advert.filter.result') ?></button>
-                            </form>
-                        </div>
-                        <ul class="hero__categories__tags">
-                            <li><a href="#"><span class="fa fa-book red"></span> <?= count($allAdverts) ?> <?= $this->twig->translation('advert.index') ?></a></li>
-                            <li><a href="#"><span class="fa fa-question-circle green"></span> <?= count($allRequests) ?> <?= $this->twig->translation('request.index') ?></a></li>
-                            <li><a href="#"><span class="fa fa-user-circle blue"></span> <?= count($allUsers) ?> <?= $this->twig->translation('home.registered') ?></a></li>
-                        </ul>
+<section class="hero set-bg" data-setbg="<?= PATH ?>/Public/img/app_bg2.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-1">
+                <div class="hero__text">
+                    <div class="section-title">
+                        <h2 class="center"><?= $this->twig->translation('index.title') ?></h2>
                     </div>
+                    <div class="hero__search__form">
+                        <form method="GET" action="<?= $this->router->generate('advert_index') ?>">
+                            <input type="text" placeholder="<?= $this->twig->translation('advert.index.search') ?>" name="name">
+                            <div class="select__option">
+                                <select name="category">
+                                    <option value=""><?= $this->twig->translation('advert.index.choose.categories') ?></option>
+                                    <?php foreach ($advertsCategories as $advertsCategorie): ?>
+                                        <option value="<?= $advertsCategorie->getCategory()->getId() ?>"><?= $advertsCategorie->getCategory()->getLabel() ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="select__option">
+                                <select name="location">
+                                    <option value=""><?= $this->twig->translation('advert.index.choose.location') ?></option>
+                                    <?php foreach ($usersLocations as $usersLocation): ?>
+                                        <option value="<?= $usersLocation->getPostCode() ?>"><?= $usersLocation->getPostCode() ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <button type="submit" name="search" value="1"><?= $this->twig->translation('advert.filter.result') ?></button>
+                        </form>
+                    </div>
+                    <ul class="hero__categories__tags">
+                        <li><a href="#"><span class="fa fa-book red"></span> <?= count($allAdverts) ?> <?= $this->twig->translation('advert.index') ?></a></li>
+                        <li><a href="#"><span class="fa fa-question-circle green"></span> <?= count($allRequests) ?> <?= $this->twig->translation('request.index') ?></a></li>
+                        <li><a href="#"><span class="fa fa-user-circle blue"></span> <?= count($allUsers) ?> <?= $this->twig->translation('home.registered') ?></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 
 <section class="categories spad">
     <div class="container">

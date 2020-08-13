@@ -207,7 +207,7 @@ class TranslationsRepository extends Repository
 
     public function test()
     {
-        $doctrine = $this->entityManager->getEntityManager();
+        $em = $this->entityManager->getEntityManager();
     }
 
 }	
@@ -236,5 +236,68 @@ public function findTranslation($name)
 
 #### Services
 
-The class Services is in **Core/Services/Services.php**
-You can setup your services, and config them in the Config class  **Core/Config.php**
+The class Service is in **App/Services/Service.php**
+
+Just extends the Service class on your new service in **App/Services/**
+
+To call a service in a controller, you just have to
+
+```php
+$this->services->getService('facebook');
+```
+
+Or in another service 
+
+```php
+$this->getService('facebook');
+```
+
+Example :
+```php
+<?php
+
+namespace App\Services;
+
+use Core\Services\Services;
+
+class FacebookService extends Service
+{
+
+    private $fb;
+
+    private $helper;
+
+    private $mj;
+
+    /**
+     * FacebookService constructor.
+     */
+    public function __construct(Services $services)
+    {
+        parent::__construct($services);
+        $this->fb = new \Facebook\Facebook([
+            'app_id' => FACEBOOK_APIKEY,
+            'app_secret' => FACEBOOK_API_SECRET,
+            'default_graph_version' => 'v2.10',
+            //'default_access_token' => '{access-token}', // optional
+        ]);
+        $this->helper = $this->fb->getRedirectLoginHelper();
+        $this->mj = $this->services->getService('mailjet');
+    }
+
+    public function getProfilFacebook()
+    {
+        try {
+            $accessToken = $this->helper->getAccessToken();
+            $response = $this->fb->get('/me?fields=email,first_name,last_name,gender', $accessToken->getValue());
+            return $response->getGraphUser();
+        } catch (FacebookResponseException  $e) {
+            echo 'Graph returned an error: ' . $e->getMessage();
+            exit;
+        } catch(FacebookSDKException $e) {
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            exit;
+        }
+    }
+}
+```

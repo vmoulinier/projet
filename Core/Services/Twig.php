@@ -3,18 +3,19 @@
 namespace Core\Services;
 
 use App\Entity\Advert;
+use App\Entity\User;
 use Core\Config\Config;
 
 class Twig extends Config
 {
 
-    public function getCurrentUser()
+    public function getCurrentUser(): ?User
     {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
             return $this->entityManager->getRepository('App\Entity\User')->find($id);
         }
-        return false;
+        return null;
     }
 
     public function postExist($exist, $else)

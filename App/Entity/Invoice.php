@@ -36,8 +36,8 @@ class Invoice
     private $createdAt;
 
     /**
-     * @Column(type="integer", nullable=false)
-     * @var int
+     * @Column(type="string", nullable=false)
+     * @var string
      */
     private $reference;
 
@@ -120,18 +120,18 @@ class Invoice
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getReference(): int
+    public function getReference(): string
     {
         return $this->reference;
     }
 
     /**
-     * @param int $reference
+     * @param string $reference
      * @return Invoice
      */
-    public function setReference(int $reference): Invoice
+    public function setReference(string $reference): Invoice
     {
         $this->reference = $reference;
         return $this;

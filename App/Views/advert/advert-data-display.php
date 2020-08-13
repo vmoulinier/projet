@@ -52,7 +52,6 @@
     </script>
 <?php endforeach; ?>
 
-<script src="<?= PATH ?>/Public/js/theme/bootstrap.min.js"></script>
 <script src="<?= PATH ?>/Public/js/theme/jquery.nice-select.min.js"></script>
 <script src="<?= PATH ?>/Public/js/theme/jquery-ui.min.js"></script>
 <script src="<?= PATH ?>/Public/js/theme/jquery.nicescroll.min.js"></script>

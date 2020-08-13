@@ -14,6 +14,14 @@ class Transaction
 
     const TYPE_TRANSFERT = 'transfert';
 
+    const STATUS_PENDING = 'pending';
+
+    const STATUS_FINISHED = 'finished';
+
+    const STATUS_ACTIVE = 'active';
+
+    const PAYPAL_TAXES = 5;
+
     /**
      * @Id @GeneratedValue @Column(type="integer")
      * @var int
@@ -27,7 +35,7 @@ class Transaction
     private $invoice;
 
     /**
-     * @Column(type="string", nullable=false)
+     * @Column(type="string", nullable=true)
      * @var string
      */
     private $type;
@@ -42,6 +50,23 @@ class Transaction
      * @var int
      */
     private $amount;
+
+    /**
+     * @Column(type="integer", nullable=true)
+     * @var int
+     */
+    private $deliveryAmount;
+
+    /**
+     * @Column(type="string", nullable=false)
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @ManyToOne(targetEntity="User", inversedBy="transaction")
+     */
+    private $user;
 
     /**
      * @return int
@@ -131,5 +156,64 @@ class Transaction
     {
         $this->amount = $amount;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeliveryAmount(): ?int
+    {
+        return $this->deliveryAmount;
+    }
+
+    /**
+     * @param int $deliveryAmount
+     * @return Transaction
+     */
+    public function setDeliveryAmount(int $deliveryAmount): Transaction
+    {
+        $this->deliveryAmount = $deliveryAmount;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     * @return Transaction
+     */
+    public function setStatus(string $status): Transaction
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Transaction
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getPaypalTaxes()
+    {
+        return ($this->getAmount() + $this->getDeliveryAmount())*self::PAYPAL_TAXES/100;
     }
 }

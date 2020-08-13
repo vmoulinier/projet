@@ -104,8 +104,81 @@
     width: 44px!important;
     font-size: 1.4em!important;
 }
+#subscription-nav {
+    width: 100%;
+    padding-bottom: 120px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    zoom: 1;
+    height: 60px;
+    margin: 0 auto;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: left;
+    padding-top: 60px;
+}
+#subscription-nav li {
+    width: 60px;
+    height: 60px;
+    line-height: 62px;
+    box-sizing: initial;
+    list-style: none;
+    font-weight: 400;
+    zoom: 1;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    color: #e5e5e5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #e5e5e5;
+}
+#subscription-nav li.active {
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+}
+#subscription-nav .separator {
+    border: none;
+    height: 1px;
+    background: #e5e5e5;
+    -webkit-box-flex: 1;
+    flex: auto;
+}
+#subscription-nav .step-name {
+    font-weight: 400;
+    font-family: ProximaNova-SemiBold,Arial,sans-serif;
+    letter-spacing: 1px;
+    color: #e5e5e5;
+    text-transform: uppercase;
+    font-size: 12px;
+    width: 100px;
+    position: relative;
+    left: -20px;
+}
+.validation-txt {
+    text-transform: uppercase;
+    font-size: 15px!important;
+    letter-spacing: 1px;
+}
 @media only screen and (max-width: 767px) {
     .user-container {
         padding: 140px 15px;
+    }
+    #subscription-nav {
+        width: 90%;
+    }
+    #subscription-nav li {
+        width: 50px;
+        height: 50px;
+    }
+    .step-name {
+        font-size: 11px!important;
+        letter-spacing: 0px!important;
     }
 }

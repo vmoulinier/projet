@@ -21,6 +21,12 @@ class Contact
     private $address;
 
     /**
+     * @Column(type="string", nullable=true)
+     * @var string
+     */
+    private $address2;
+
+    /**
      * @Column(type="integer", nullable=false)
      * @var integer
      */
@@ -33,10 +39,16 @@ class Contact
     private $city;
 
     /**
+     * @ManyToOne(targetEntity="Country", inversedBy="contact")
+     * @JoinColumn(name="country_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $country;
+
+    /**
      * @Column(type="string", nullable=false)
      * @var string
      */
-    private $country;
+    private $phoneNumber;
 
     /**
      * @ManyToOne(targetEntity="User", fetch="EAGER")
@@ -117,18 +129,18 @@ class Contact
     }
 
     /**
-     * @return string
+     * @return Country
      */
-    public function getCountry(): string
+    public function getCountry(): Country
     {
         return $this->country;
     }
 
     /**
-     * @param string $country
+     * @param Country $country
      * @return Contact
      */
-    public function setCountry(string $country): Contact
+    public function setCountry(Country $country): Contact
     {
         $this->country = $country;
         return $this;
@@ -149,6 +161,42 @@ class Contact
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress2(): string
+    {
+        return $this->address2;
+    }
+
+    /**
+     * @param string $address2
+     * @return Contact
+     */
+    public function setAddress2(string $address2): Contact
+    {
+        $this->address2 = $address2;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPhoneNumber(): int
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param int $phoneNumber
+     * @return Contact
+     */
+    public function setPhoneNumber(int $phoneNumber): Contact
+    {
+        $this->phoneNumber = $phoneNumber;
         return $this;
     }
 }

@@ -5,7 +5,6 @@ namespace App\Controller;
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
 
-
 class UserController extends Controller
 {
     public function login()
@@ -41,7 +40,7 @@ class UserController extends Controller
         $userService = $this->services->getService('user');
 
         if ($this->request->get('code')) {
-            $profil = $this->services->getProfilFacebook();
+            $profil = $userService->getProfilFacebook();
 
             if (!$userService->loginfb($profil->getEmail(), $profil->getId())) {
                 $error = $userService->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());

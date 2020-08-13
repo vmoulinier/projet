@@ -6,17 +6,25 @@ use App\Model\Repository;
 use App\Services\Service;
 use Core\Config\Config;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 require_once 'Core/Config/Config.php';
 
 class Services extends Config
 {
 
-    public function getRepository(string $entity): Repository
+    /**
+     * @return Repository|EntityRepository
+     */
+    public function getRepository(string $entity)
     {
         if (class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';
             return new $repository($this);
+        }
+
+        if (class_exists('\App\Entity\\' . ucfirst($entity))) {
+            return $this->getEntityManager()->getRepository('\App\Entity\\' . ucfirst($entity));
         }
 
         throw new \Error('repository not found');

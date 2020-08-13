@@ -1,13 +1,9 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 
 class AdvertController extends Controller
 {
@@ -80,7 +76,8 @@ class AdvertController extends Controller
                 $questions = $this->services->getRepository('question')->findBy(['advert' => $advert]);
                 $this->template = 'default';
                 $this->title = $advert->getTitle();
-                $this->render('advert/view', compact('advert', 'pictures', 'questions'));
+                $form = new TemplateForm();
+                $this->render('advert/view', compact('advert', 'pictures', 'questions', 'form'));
             }
         }
         $this->denied();
