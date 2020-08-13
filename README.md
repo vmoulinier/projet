@@ -190,7 +190,7 @@ Doctrine can be called from the class Services in **Core/Services/Services.php**
 In a **controller** you just have to
 
 ```php
-$this->services->getDoctrine();
+$this->services->getEntityManager();
 ```
 
 Or if you need to access to a repository
@@ -207,7 +207,7 @@ class TranslationsRepository extends Repository
 
     public function test()
     {
-        $doctrine = $this->entityManager->getDoctrine();
+        $doctrine = $this->entityManager->getEntityManager();
     }
 
 }	

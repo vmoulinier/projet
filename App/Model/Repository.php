@@ -7,13 +7,13 @@ use Doctrine\ORM\EntityRepository;
 
 class Repository
 {
-    protected $entityManager;
+    protected $services;
 
     protected $entityRepository;
 
     public function __construct(Services $services)
     {
-        $this->entityManager = $services;
+        $this->services = $services;
         $this->entityRepository = $this->getEntityRepository();
     }
 
@@ -40,7 +40,7 @@ class Repository
     public function getRepository(string $entity): ?EntityRepository
     {
         if (class_exists('App\Entity\\'.ucfirst($entity))) {
-            return $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.ucfirst($entity));
+            return $this->services->getEntityManager()->getRepository('App\Entity\\'.ucfirst($entity));
         }
         return null;
     }
@@ -51,7 +51,7 @@ class Repository
         $currentClass = str_replace('Repository', '', $currentClass[2]);
 
         if (class_exists('App\Entity\\'.$currentClass)) {
-            return $this->entityManager->getDoctrine()->getRepository('App\Entity\\'.$currentClass);
+            return $this->services->getEntityManager()->getRepository('App\Entity\\'.$currentClass);
         }
         return null;
     }

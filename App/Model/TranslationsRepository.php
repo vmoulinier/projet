@@ -12,14 +12,14 @@ class TranslationsRepository extends Repository
         $translation->setName(trim($name));
         $translation->setFr($fr);
         $translation->setEn($en);
-        $this->entityManager->getDoctrine()->flush();
+        $this->entityManager->getEntityManager()->flush();
     }
 
     public function removeTranslation(int $id): void
     {
         $translation = $this->find($id);
-        $this->entityManager->getDoctrine()->remove($translation);
-        $this->entityManager->getDoctrine()->flush();
+        $this->entityManager->getEntityManager()->remove($translation);
+        $this->entityManager->getEntityManager()->flush();
     }
 
     public function addTranslation(string $name, string $fr, string $en): void
@@ -30,8 +30,8 @@ class TranslationsRepository extends Repository
             $translation->setName(trim($name));
             $translation->setFr($fr);
             $translation->setEn($en);
-            $this->entityManager->getDoctrine()->persist($translation);
-            $this->entityManager->getDoctrine()->flush();
+            $this->entityManager->getEntityManager()->persist($translation);
+            $this->entityManager->getEntityManager()->flush();
         }
     }
 

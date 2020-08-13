@@ -15,7 +15,7 @@ class AdvertController extends Controller
     public function index()
     {
         $advertRepo = $this->services->getRepository('advert');
-        $advertsCategories = $this->services->getRepository('advert')->findAllCategoryAdverts();
+        $advertsCategories = $advertRepo->findAllCategoryAdverts();
         $usersLocations = $this->services->getRepository('user')->findAllPostcodeUsers();
         $adverts = $advertRepo->findBy(['locked' => 0]);
 
@@ -51,28 +51,28 @@ class AdvertController extends Controller
     public function viewadvert(array $params)
     {
         if (isset($params['id'])) {
-            $advert = $this->doctrine->getRepository('App\Entity\Advert')->find($params['id']);
-            $advert->setViews($advert->getViews() + 1);
-            $this->services->getDoctrine()->flush();
+            $advert = $this->services->getRepository('advert')->find($params['id']);
 
             if ($advert) {
+                $advertService = $this->services->getService('advert');
+                $advertService->setView($advert);
                 if ('POST' === $this->request->getMethod()) {
 
                     if ($this->request->get('submitReview')) {
                         $message = $this->request->get('message');
-                        $this->services->getRepository('question')->addQuestion($message, $advert, $this->getCurrentUser());
+                        $advertService->addQuestion($message, $advert, $this->getCurrentUser());
                         $this->addFlashBag('Success, but need to validate');
                     }
 
                     if ($this->request->get('submitAnswer')) {
                         $message = $this->request->get('answer');
                         $questionId = $this->request->get('question_id');
-                        $this->services->getRepository('answer')->addAnswer($message, $questionId);
+                        $advertService->addAnswer($message, $questionId);
                         $this->addFlashBag('Success, but need to validate');
                     }
 
                     if ($this->request->get('fav')) {
-                        $this->services->getRepository('bookmark')->addBookmark($advert, $this->getCurrentUser());
+                        $advertService->addBookmark($advert, $this->getCurrentUser());
                     }
                 }
 
@@ -95,7 +95,7 @@ class AdvertController extends Controller
             $this->redirect('user_login');
         }
 
-        $advertRepo = $this->services->getRepository('advert');
+        $advertService = $this->services->getService('advert');
         $expeditionRepo = $this->services->getRepository('expeditionType');
         $categoryRepo = $this->services->getRepository('category');
 
@@ -109,7 +109,7 @@ class AdvertController extends Controller
             $purchasedat = new \DateTime($this->request->get('purchasedat'));
             $expeditiontype = $expeditionRepo->find($this->request->get('expeditiontype'));
             $guarantee = $this->request->get('guarantee');
-            $advertRepo->create($title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
+            $advertService->create($title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
 
             $this->addFlashBag('Success, but need to validate');
         }
@@ -132,8 +132,10 @@ class AdvertController extends Controller
             }
 
             $advertRepo = $this->services->getRepository('advert');
+            $advertService = $this->services->getService('advert');
             $categoryRepo = $this->services->getRepository('category');
             $pictureRepo = $this->services->getRepository('picture');
+            $pictureService = $this->services->getService('picture');
             $advert = $advertRepo->find($params['id']);
 
             if ($advert && $advert->getUser() === $user) {
@@ -149,19 +151,19 @@ class AdvertController extends Controller
                         $purchasedat = new \DateTime($this->request->get('purchasedat'));
                         $expeditiontype = $expeditionRepo->find($this->request->get('expeditiontype'));
                         $guarantee = $this->request->get('guarantee');
-                        $advertRepo->update($advert, $title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
+                        $advertService->update($advert, $title, $category, $user, $price, $description, $brand, $shape, $purchasedat, $expeditiontype, $guarantee);
                         $this->addFlashBag('Success, but need to validate');
                     }
 
                     if ($this->request->get('rotation')) {
                         $rotation = $this->request->get('rotation');
                         $picture = $pictureRepo->find($this->request->get('img'));
-                        $pictureRepo->rotate($picture, $rotation);
+                        $pictureService->rotate($picture, $rotation);
                     }
 
                     if ($this->request->get('delete')) {
                         $picture = $pictureRepo->find($this->request->get('delete'));
-                        $pictureRepo->delete($picture);
+                        $pictureService->delete($picture);
                     }
 
                 }

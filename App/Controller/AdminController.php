@@ -64,14 +64,14 @@ class AdminController extends Controller
     public function users()
     {
         $userRepo = $this->services->getRepository('user');
-        $adminRepo = $this->services->getRepository('admin');
+        $userService = $this->services->getService('user');
         $users = [];
 
         if('POST' === $this->request->getMethod()) {
             $id = $this->request->get('login');
 
             if(isset($id)) {
-                $adminRepo->login($id);
+                $userService->loginAdmin($id);
                 $this->redirect('index');
             }
 

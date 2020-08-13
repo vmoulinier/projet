@@ -10,12 +10,14 @@ class HomeController extends Controller
     {
         $str = 'Hello World';
 
-        $advertsCategories = $this->services->getRepository('advert')->findAllCategoryAdverts();
-        $allAdverts = $this->services->getRepository('advert')->findAll();
+        $advertRepo = $this->services->getRepository('advert');
+        $userRepo = $this->services->getRepository('user');
+        $advertsCategories = $advertRepo->findAllCategoryAdverts();
+        $allAdverts = $advertRepo->findAll();
         $allRequests = [];
-        $usersLocations = $this->services->getRepository('user')->findAllPostcodeUsers();
-        $allUsers = $this->services->getRepository('user')->findAll();
-        $premiumAdverts = $this->services->getRepository('advert')->findBy([], ['id' => 'DESC'], 4, 0);
+        $usersLocations = $userRepo->findAllPostcodeUsers();
+        $allUsers = $userRepo->findAll();
+        $premiumAdverts = $advertRepo->findBy([], ['id' => 'DESC'], 4, 0);
 
         $this->template = 'default';
         $this->title =  $this->twig->translation('home.page.title');

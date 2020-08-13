@@ -3,6 +3,7 @@
 namespace Core\Controller;
 
 use App\Model\Repository;
+use App\Services\Service;
 use Core\Services\Services;
 use Core\Services\Twig;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ class Controller {
     protected $title;
     protected $repository;
     protected $services;
-    protected $doctrine;
+    protected $uservice;
     protected $flashBag = [];
     protected $request;
     protected $router;
@@ -29,7 +30,7 @@ class Controller {
         $this->title = PROJECT_NAME;
         $this->services = new Services();
         $this->repository = new Repository($this->services);
-        $this->doctrine = $this->services->getDoctrine();
+        $this->uservice = new Service($this->services);
         $this->twig = new Twig();
         $this->router = $router;
         $this->dataValidator();
@@ -58,7 +59,7 @@ class Controller {
     {
         if(isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
-            return $this->doctrine->getRepository('App\Entity\User')->find($id);
+            return $this->services->getEntityManager()->getRepository('App\Entity\User')->find($id);
         }
         return false;
     }
