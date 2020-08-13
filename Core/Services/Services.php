@@ -12,7 +12,7 @@ require_once 'Core/Config/Config.php';
 class Services extends Config
 {
 
-    public function getRepository($entity): Repository
+    public function getRepository(string $entity): Repository
     {
         if (class_exists('\App\Model\\' . ucfirst($entity) . 'Repository')) {
             $repository = '\App\Model\\' . ucfirst($entity) . 'Repository';
@@ -22,7 +22,7 @@ class Services extends Config
         throw new \Error('repository not found');
     }
 
-    public function getService($name): Service
+    public function getService(string $name): Service
     {
         if(class_exists('\App\Services\\' . ucfirst($name) . 'Service')) {
             $service = '\App\Services\\' . ucfirst($name) . 'Service';

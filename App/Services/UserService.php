@@ -10,7 +10,7 @@ class UserService extends Service
 
     public function register(string $email, string $password, string $password_verif, string $name, string $firstname, string $facebook = null): array
     {
-        $users = $this->services->getRepository('user')->findOneBy(['email' => $email]);
+        $users = $this->getRepository('user')->findOneBy(['email' => $email]);
         $error = [];
 
         if(!$users) {
@@ -25,8 +25,8 @@ class UserService extends Service
                 if (ENV === 'dev') {
                     $user->setType('ROLE_ADMIN');
                 }
-                $this->services->getEntityManager()->persist($user);
-                $this->services->getEntityManager()->flush();
+                $this->getEntityManager()->persist($user);
+                $this->getEntityManager()->flush();
                 $error[0] = "account.register.success";
                 $error[1] = "success";
                 $error[2] = true;
@@ -46,7 +46,7 @@ class UserService extends Service
 
     public function login(string $email, string $password, bool $facebook = false): bool
     {
-        $user = $this->services->getRepository('user')->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
+        $user = $this->getRepository('user')->findOneBy(['email' =>$email, 'password' =>sha1($password)]);
         if($user) {
             if ($user->getFacebookId() && !$facebook) {
                 return false;
@@ -65,7 +65,7 @@ class UserService extends Service
     {
         $_SESSION['edit_admin_id'] = $_SESSION['user_id'];
 
-        $userRepo =  $this->services->getRepository('user');
+        $userRepo =  $this->getRepository('user');
         $user = $userRepo->find($id);
 
         if($user->getType() === 'ROLE_ADMIN'){

@@ -2,13 +2,6 @@
 
 namespace App\Model;
 
-use App\Entity\Advert;
-use App\Entity\Category;
-use App\Entity\ExpeditionType;
-use App\Entity\Picture;
-use App\Entity\User;
-use Core\Services\Services;
-
 class AdvertRepository extends Repository
 {
     public function findAllCategoryAdverts()

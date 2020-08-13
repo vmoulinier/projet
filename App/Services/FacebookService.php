@@ -50,7 +50,7 @@ class FacebookService extends Service
 
     public function getMalilJetService()
     {
-        return $this->services->getService('mailjet');
+        return $this->getService('mailjet');
     }
 
     public function getUrlLoginFacebook($scope): string

@@ -33,27 +33,27 @@ class AdvertService extends Service
         $advert->setType(1);
         $advert->setCreatedAt(new \DateTime());
 
-        $this->services->getEntityManager()->persist($advert);
+        $this->getEntityManager()->persist($advert);
 
         if(!empty($_FILES)) {
-            $pictureService = $this->services->getService('picture');
+            $pictureService = $this->getService('picture');
             $arrayNames = $pictureService->processPictures(DIR_ADVERT . '/' . $user->getId());
             foreach ($arrayNames as $arrayName) {
                 $picture = new Picture();
                 $picture->setAdvert($advert);
                 $picture->setName($arrayName);
                 $picture->setCreatedAt(new \DateTime());
-                $this->services->getEntityManager()->persist($picture);
+                $this->getEntityManager()->persist($picture);
             }
         }
 
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
 
     }
 
     public function update(Advert $advert, string $title, Category $category, User $user, int $price, string $description, string $brand, string $shape, \DateTime $purchasedat, ExpeditionType $expeditiontype, ?string $guarantee = null): void
     {
-        $user = $this->services->getRepository('user')->find($user->getId());
+        $user = $this->getRepository('user')->find($user->getId());
         $advert->setTitle($title) ;
         $advert->setCategory($category) ;
         $advert->setUser($user);
@@ -70,41 +70,41 @@ class AdvertService extends Service
         $advert->setType(1);
         $advert->setCreatedAt(new \DateTime());
 
-        $this->services->getEntityManager()->persist($advert);
+        $this->getEntityManager()->persist($advert);
 
         if(!empty($_FILES)) {
-            $pictureService = $this->services->getService('picture');
+            $pictureService = $this->getService('picture');
             $arrayNames = $pictureService->processPictures(DIR_ADVERT . '/' . $user->getId());
             foreach ($arrayNames as $arrayName) {
                 $picture = new Picture();
                 $picture->setAdvert($advert);
                 $picture->setName($arrayName);
                 $picture->setCreatedAt(new \DateTime());
-                $this->services->getEntityManager()->persist($picture);
+                $this->getEntityManager()->persist($picture);
             }
         }
 
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
     }
 
     public function delete(Advert $advert): void
     {
-        $this->services->getEntityManager()->remove($advert);
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->remove($advert);
+        $this->getEntityManager()->flush();
     }
 
     public function lock(Advert $advert): void
     {
         ($advert->getLocked()) ? $advert->setLocked(0) : $advert->setLocked(1);
-        $this->services->getEntityManager()->persist($advert);
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->persist($advert);
+        $this->getEntityManager()->flush();
     }
 
     public function setView(Advert $advert): void
     {
         $advert->setViews($advert->getViews() + 1);
-        $this->services->getEntityManager()->persist($advert);
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->persist($advert);
+        $this->getEntityManager()->flush();
     }
 
     public function addQuestion(string $message, Advert $advert, User $user): void
@@ -114,34 +114,34 @@ class AdvertService extends Service
         $question->setCreatedAt(new \DateTime());
         $question->setAdvert($advert);
         $question->setUser($user);
-        $this->services->getEntityManager()->persist($question);
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->persist($question);
+        $this->getEntityManager()->flush();
     }
 
     public function addAnswer(string $message, int $questionId)
     {
-        $question = $this->services->getRepository('question')->find($questionId);
+        $question = $this->getRepository('question')->find($questionId);
         $answer = new Answer();
         $answer->setCreatedAt(new \DateTime());
         $answer->setMessage($message);
         $answer->setQuestion($question);
-        $this->services->getEntityManager()->persist($answer);
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->persist($answer);
+        $this->getEntityManager()->flush();
     }
 
     public function addBookmark(Advert $advert, User $user): void
     {
-        $bookmark = $this->services->getRepository('bookmark')->findOneBy(['advert' => $advert, 'user' => $user]);
+        $bookmark = $this->getRepository('bookmark')->findOneBy(['advert' => $advert, 'user' => $user]);
 
         if ($bookmark) {
-            $this->services->getEntityManager()->remove($bookmark);
+            $this->getEntityManager()->remove($bookmark);
         } else {
             $bookmark = new Bookmark();
             $bookmark->setUser($user);
             $bookmark->setAdvert($advert);
-            $this->services->getEntityManager()->persist($bookmark);
+            $this->getEntityManager()->persist($bookmark);
         }
 
-        $this->services->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
     }
 }

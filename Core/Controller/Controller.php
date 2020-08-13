@@ -2,8 +2,6 @@
 
 namespace Core\Controller;
 
-use App\Model\Repository;
-use App\Services\Service;
 use Core\Services\Services;
 use Core\Services\Twig;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +11,8 @@ class Controller {
     protected $path;
     protected $template;
     protected $title;
-    protected $repository;
     protected $services;
-    protected $uservice;
+    protected $twig;
     protected $flashBag = [];
     protected $request;
     protected $router;
@@ -29,8 +26,6 @@ class Controller {
         $this->template = 'default';
         $this->title = PROJECT_NAME;
         $this->services = new Services();
-        $this->repository = new Repository($this->services);
-        $this->uservice = new Service($this->services);
         $this->twig = new Twig();
         $this->router = $router;
         $this->dataValidator();

@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use App\Entity\User;
-
 class UserRepository extends Repository
 {
 

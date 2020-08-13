@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Core\Services\Services;
 use Mailjet\Client;
 use Mailjet\Resources;
 
