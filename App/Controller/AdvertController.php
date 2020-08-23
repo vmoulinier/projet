@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Advert;
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
 
@@ -13,7 +14,7 @@ class AdvertController extends Controller
         $advertRepo = $this->services->getRepository('advert');
         $advertsCategories = $advertRepo->findAllCategoryAdverts();
         $usersLocations = $this->services->getRepository('user')->findAllPostcodeUsers();
-        $adverts = $advertRepo->findBy(['locked' => 0]);
+        $adverts = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE]);
 
         if ('POST' === $this->request->getMethod()) {
             $limit = $this->request->get('limit');
@@ -22,7 +23,7 @@ class AdvertController extends Controller
             if (isset($limit, $start)) {
 
                 if (!$this->request->get('search')) {
-                    $adverts = $advertRepo->findBy(['locked' => 0], null, $limit, $start);
+                    $adverts = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE], null, $limit, $start);
                 }
 
                 if ($this->request->get('search')) {

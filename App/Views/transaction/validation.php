@@ -4,7 +4,7 @@
             <div class="listing__details__about">
                 <h2><?= $this->twig->translation('transaction.validation') ?></h2>
                 <br />
-                <form method="POST">
+                <form method="POST" action="<?= $this->router->generate("transaction_process_post") ?>">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card bg-light mb-5">
@@ -58,7 +58,7 @@
                             <p class="validation-txt mb-4"><?= $advert->getTitle() ?></p>
                         </div>
                         <div class="col-5 text-right">
-                            <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getAmount() ?>
+                            <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getAmount()/100 ?>
                         </div>
                     </div>
                     <?php if($transaction->getDeliveryAmount()): ?>
@@ -67,7 +67,7 @@
                                 <p class="validation-txt mb-4"><?= $this->twig->translation('transaction.delivery.taxes') ?></p>
                             </div>
                             <div class="col-5 text-right">
-                                <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getDeliveryAmount() ?>
+                                <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getDeliveryAmount()/100 ?>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -76,7 +76,7 @@
                             <p class="validation-txt mb-4"><?= $this->twig->translation('transaction.paypal.taxes') ?></p>
                         </div>
                         <div class="col-5 text-right">
-                            <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getPaypalTaxes() ?>
+                            <i class="fa fa-usd" aria-hidden="true"></i> <?= $transaction->getPaypalTaxes()/100 ?>
                         </div>
                     </div>
                     <hr class="my-4">
@@ -87,7 +87,7 @@
                                     <p class="validation-txt mb-4"><b><?= $this->twig->translation('transaction.total') ?></b></p>
                                 </div>
                                 <div class="col-6">
-                                    <i class="fa fa-usd" aria-hidden="true"></i> <span id="totalPrice"><?= $transaction->getAmount() + $transaction->getDeliveryAmount() ?></span>
+                                    <i class="fa fa-usd" aria-hidden="true"></i> <span id="totalPrice"><?= ($transaction->getAmount() + $transaction->getDeliveryAmount())/100 ?></span>
                                 </div>
                             </div>
                         </div>
@@ -146,8 +146,8 @@
     $("input[name='method']").change(function(){
         let val = $("input[name='method']:checked").val();
         let paypal = $('.paypal-taxes');
-        let totalPrice = '<?= $transaction->getAmount() + $transaction->getDeliveryAmount() ?>';
-        let totalPricePayPal = '<?= $transaction->getAmount() + $transaction->getDeliveryAmount() + $transaction->getPaypalTaxes() ?>';
+        let totalPrice = '<?= ($transaction->getAmount() + $transaction->getDeliveryAmount())/100 ?>';
+        let totalPricePayPal = '<?= ($transaction->getAmount() + $transaction->getDeliveryAmount() + $transaction->getPaypalTaxes())/100 ?>';
         let price = $('#totalPrice');
 
         price.text(totalPrice);

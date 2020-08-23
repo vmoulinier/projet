@@ -2,7 +2,9 @@
 
 namespace App\Model;
 
-class AdvertRepository extends Repository
+use App\Entity\Advert;
+
+class  AdvertRepository extends Repository
 {
     public function findAllCategoryAdverts()
     {
@@ -17,7 +19,7 @@ class AdvertRepository extends Repository
     public function search(?string $name, ?string $category, ?string $location, $price, $limit = null, $start = null): array
     {
         $queryBuilder = $this->entityRepository->createQueryBuilder('a');
-        $res = $queryBuilder->select('a')->where('a.lock = 0');
+        $res = $queryBuilder->select('a')->where('a.status = :status');
 
         if ($name) {
             $res->andWhere('a.title LIKE :name')
@@ -47,6 +49,6 @@ class AdvertRepository extends Repository
                 ->setMaxResults($limit);
         }
 
-        return $res->orderBy('a.id', 'DESC')->getQuery()->getResult();
+        return $res->orderBy('a.id', 'DESC')->setParameter(':status', Advert::STATUS_ACTIVE)->getQuery()->getResult();
     }
 }

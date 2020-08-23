@@ -6,7 +6,8 @@
         "facebook/graph-sdk": "^5.7",
         "symfony/http-foundation": "^5.0",
         "altorouter/altorouter": "^2.0",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "spipu/html2pdf": "^5.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^5.0"

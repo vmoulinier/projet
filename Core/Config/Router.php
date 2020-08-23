@@ -32,6 +32,8 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts');
         $this->router->map('POST', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/bookmarks', 'user/bookmarks', 'user_bookmarks');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/user_transactions', 'user/transactions', 'user_transactions');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/invoice/[i:id]', 'user/invoice', 'user_invoice');
 
         //admin
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
@@ -54,6 +56,8 @@ class Router {
         //transaction
         $this->router->map('POST', '/'.PROJECT_NAME.'/creation', 'transaction/creation', 'transaction_creation_post');
         $this->router->map('POST', '/'.PROJECT_NAME.'/validation', 'transaction/validation', 'transaction_validation_post');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/process', 'transaction/process', 'transaction_process_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/summary/[a:id]?', 'transaction/summary', 'transaction_summary_paypal');
     }
 
     public function targets()

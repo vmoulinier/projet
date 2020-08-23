@@ -9,7 +9,6 @@ class HomeController extends Controller
     public function index()
     {
         $str = 'Hello World';
-
         $advertRepo = $this->services->getRepository('advert');
         $userRepo = $this->services->getRepository('user');
         $advertsCategories = $advertRepo->findAllCategoryAdverts();

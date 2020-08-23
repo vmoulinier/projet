@@ -7,10 +7,10 @@
         <div class="col-md-4 p-0 ">
             <div class="listing__item m-2">
                 <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
-                    <?php if($advert->getLocked()): ?>
-                    <div class="listing__item__pic__tag pointer view-advt bg-secondary" id="lock<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.unlock') ?></div>
-                    <?php else: ?>
+                    <?php if($advert->isActive()): ?>
                         <div class="listing__item__pic__tag pointer view-advt bg-success" id="lock<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.lock') ?></div>
+                    <?php elseif($advert->getStatus() === \App\Entity\Advert::STATUS_LOCKED): ?>
+                        <div class="listing__item__pic__tag pointer view-advt bg-secondary" id="lock<?=  $advert->getId() ?>"><?= $this->twig->translation('user.advert.unlock') ?></div>
                     <?php endif; ?>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.urgent') ?></div>
                     <div class="listing__item__pic__tag pointer view-advt bg-info"><?= $this->twig->translation('user.advert.up') ?></div>

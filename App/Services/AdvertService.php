@@ -95,7 +95,7 @@ class AdvertService extends Service
 
     public function lock(Advert $advert): void
     {
-        ($advert->getLocked()) ? $advert->setLocked(0) : $advert->setLocked(1);
+        ($advert->getStatus() !== Advert::STATUS_LOCKED) ? $advert->setStatus(Advert::STATUS_LOCKED) : $advert->setStatus(Advert::STATUS_ACTIVE);
         $this->getEntityManager()->persist($advert);
         $this->getEntityManager()->flush();
     }

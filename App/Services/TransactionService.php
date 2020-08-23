@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Entity\Advert;
 use App\Entity\Contact;
 use App\Entity\Country;
+use App\Entity\Invoice;
+use App\Entity\InvoiceLine;
 use App\Entity\Transaction;
 use App\Entity\User;
 
@@ -35,7 +37,7 @@ class TransactionService extends Service
         return $transaction;
     }
 
-    public function contactTransaction(string $address, string $address2, int $postCode, int $phoneNumber, string $city, Country $country, User $user)
+    public function contactTransaction(string $address, string $address2, int $postCode, int $phoneNumber, string $city, Country $country, User $user): void
     {
         $contact = $this->getRepository('contact')->findOneBy(['user' => $user]);
 
@@ -52,5 +54,31 @@ class TransactionService extends Service
         $contact->setUser($user);
         $this->getEntityManager()->persist($contact);
         $this->getEntityManager()->flush();
+    }
+
+    public function finishTransaction(Transaction $transaction): void
+    {
+        if ($transaction->getStatus() === Transaction::STATUS_FINISHED) {
+            return;
+        }
+        $advert = $transaction->getInvoice()->getAdvert();
+        $transaction->setStatus(Transaction::STATUS_FINISHED);
+        $this->getEntityManager()->persist($transaction);
+        $advert->setStatus(Advert::STATUS_PURSHASED);
+        $this->getService('invoice')->finishInvoice($transaction);
+        $this->getEntityManager()->flush();
+        $this->services->getService('notification')->notify();
+    }
+
+    public function finishTransactionTransfert(Transaction $transaction): void
+    {
+        if ($transaction->getStatus() === Transaction::STATUS_FINISHED) {
+            return;
+        }
+        $transaction->setStatus(Transaction::STATUS_FINISHED);
+        $this->getEntityManager()->persist($transaction);
+        $this->getService('invoice')->finishInvoice($transaction);
+        $this->getEntityManager()->flush();
+        $this->services->getService('notification')->notify();
     }
 }

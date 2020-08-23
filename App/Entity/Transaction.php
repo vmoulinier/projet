@@ -18,7 +18,7 @@ class Transaction
 
     const STATUS_FINISHED = 'finished';
 
-    const STATUS_ACTIVE = 'active';
+    const STATUS_NEW = 'new';
 
     const PAYPAL_TAXES = 5;
 
@@ -89,7 +89,7 @@ class Transaction
     /**
      * @return mixed
      */
-    public function getInvoice()
+    public function getInvoice(): ?Invoice
     {
         return $this->invoice;
     }

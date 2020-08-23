@@ -25,7 +25,7 @@ class Controller {
         $this->path = 'App/Views/';
         $this->template = 'default';
         $this->title = PROJECT_NAME;
-        $this->services = new Services();
+        $this->services = new Services($router);
         $this->twig = new Twig();
         $this->router = $router;
         $this->dataValidator();

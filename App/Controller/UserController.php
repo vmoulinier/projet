@@ -148,4 +148,31 @@ class UserController extends Controller
 
         $this->render('user/bookmarks', compact('bookmarks'));
     }
+
+    public function transactions()
+    {
+        $this->template = 'user';
+        $user = $this->getCurrentUser();
+
+        $transactions = $this->services->getRepository('transaction')->findBy(['user' => $user]);
+
+        $this->render('user/transactions', compact('transactions'));
+    }
+
+    public function invoice(array $params)
+    {
+        if (isset($params['id'])) {
+            $user = $this->getCurrentUser();
+
+
+            $transaction = $this->services->getRepository('transaction')->find($params['id']);
+            $contact = $this->services->getRepository('contact')->findOneBy(['user' => $user]);
+            if ($transaction && $transaction->getUser() === $user) {
+                $this->services->getService('pdf')->create('invoices/default', ['transaction' => $transaction, 'contact' => $contact]);
+                die;
+            }
+
+        }
+        $this->denied();
+    }
 }

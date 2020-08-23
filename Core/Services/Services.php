@@ -13,6 +13,19 @@ require_once 'Core/Config/Config.php';
 class Services extends Config
 {
 
+    private $router;
+
+    /**
+     * Services constructor.
+     * @param \AltoRouter|null $router
+     */
+    public function __construct(\AltoRouter $router = null)
+    {
+        parent::__construct();
+        $this->router = $router;
+    }
+
+
     /**
      * @return Repository|EntityRepository
      */
@@ -43,5 +56,13 @@ class Services extends Config
     public function getEntityManager(): EntityManager
     {
         return $this->entityManager;
+    }
+
+    /**
+     * @return \AltoRouter|null
+     */
+    public function getRouter(): ?\AltoRouter
+    {
+        return $this->router;
     }
 }

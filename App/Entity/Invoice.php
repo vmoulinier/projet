@@ -3,6 +3,8 @@
 
 namespace App\Entity;
 
+use Core\Services\Services;
+
 /**
  * @Entity @Table(name="invoice")
  */
@@ -158,7 +160,7 @@ class Invoice
     /**
      * @return mixed
      */
-    public function getAdvert()
+    public function getAdvert(): ?Advert
     {
         return $this->advert;
     }
@@ -207,5 +209,22 @@ class Invoice
     {
         $this->urgent = $urgent;
         return $this;
+    }
+
+    public function getLines()
+    {
+        $service = new Services();
+        return $service->getRepository('invoiceLine')->findBy(['invoice' => $this]);
+    }
+
+    public function getTotalAmount()
+    {
+        $price = 0;
+
+        foreach ($this->getLines() as $line) {
+            $price += $line->getUnitAmount()*$line->getQuantity();
+        }
+
+        return $price;
     }
 }

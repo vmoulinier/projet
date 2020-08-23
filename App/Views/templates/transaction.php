@@ -23,12 +23,12 @@
                 <div class="step-name"><?= $this->twig->translation('step.validation') ?></div>
             </li>
             <li class="separator"></li>
-            <li class="<?php if($this->twig->isNavActive(['summary'])): ?>active<?php endif; ?>">
+            <li>
                 3
                 <div class="step-name"><?= $this->twig->translation('step.summary') ?></div>
             </li>
             <li class="separator"></li>
-            <li class="align-content-center">
+            <li class="align-content-center <?php if($this->twig->isNavActive(['summary'])): ?>active<?php endif; ?>">
                 <div class="fas fa-check fa-2x mt-3"></div>
                 <div class="step-name"></div>
             </li>

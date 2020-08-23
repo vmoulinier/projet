@@ -62,7 +62,7 @@ class TransactionController extends Controller
     {
         if('POST' === $this->request->getMethod() && $this->request->get('submit')) {
             $paymentMethod = $this->request->get('method');
-            $transaction = $this->services->getService('transaction')->find($this->request->get('transaction'));
+            $transaction = $this->services->getRepository('transaction')->find($this->request->get('transaction'));
             if ($transaction) {
                 switch ($paymentMethod) {
                     case 1:
@@ -80,8 +80,24 @@ class TransactionController extends Controller
         $this->denied();
     }
 
-    public function summary()
+    public function summary(array $params)
     {
+        if (isset($params['id'])) {
+            $transaction = $this->services->getRepository('transaction')->find($params['id']);
+            if ($transaction && $transaction->getUser() === $this->getCurrentUser()) {
+                switch ($transaction->getType()) {
+                    case Transaction::TYPE_PAYPAL:
+                        $this->services->getService('transaction')->finishTransaction($transaction);
+                        break;
+                    case Transaction::TYPE_TRANSFERT:
+                        $this->services->getService('transaction')->finishTransactionTransfert($transaction);
+                        break;
+                }
 
+                $this->template = 'transaction';
+                $this->render('transaction/summary', compact('transaction'));
+            }
+        }
+        $this->denied();
     }
 }

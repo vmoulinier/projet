@@ -38,8 +38,8 @@
                 <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['bookmarks']) ?>" href="<?= $this->router->generate('user_bookmarks') ?>">
                     <?= $this->twig->translation('user.nav.bookmarks') ?>
                 </a>
-                <a class="list-group-item list-group-item-action" href="<?= $this->router->generate('user_profil') ?>">
-                    Porta ac consectetur ac
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_transactions']) ?>" href="<?= $this->router->generate('user_transactions') ?>">
+                    <?= $this->twig->translation('user.nav.transactions') ?>
                 </a>
                 <a class="list-group-item list-group-item-action" href="<?= $this->router->generate('user_profil') ?>">
                     Vestibulum at eros

@@ -10,6 +10,15 @@ use Core\Services\Services;
  */
 class Advert
 {
+
+    const STATUS_PENDING = 'pending';
+
+    const STATUS_ACTIVE = 'active';
+
+    const STATUS_PURSHASED = 'purshased';
+
+    const STATUS_LOCKED = 'locked';
+
     /**
      * @Id @GeneratedValue @Column(type="integer")
      * @var int
@@ -88,10 +97,10 @@ class Advert
     private $user;
 
     /**
-     * @Column(type="integer", nullable=false)
-     * @var int
+     * @Column(type="string", nullable=false)
+     * @var string
      */
-    private $locked = 0;
+    private $status;
 
     /**
      * @return int
@@ -346,20 +355,20 @@ class Advert
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getLocked(): int
+    public function getStatus(): string
     {
-        return $this->locked;
+        return $this->status;
     }
 
     /**
-     * @param int $locked
+     * @param string $status
      * @return Advert
      */
-    public function setLocked(int $locked): Advert
+    public function setStatus(string $status): Advert
     {
-        $this->locked = $locked;
+        $this->status = $status;
         return $this;
     }
 
@@ -373,5 +382,10 @@ class Advert
     {
         $pictures = $this->getAdvertPictures();
         return PATH . '/' . UPLOAD_PATH . $this->getUser()->getId() . '/' . $pictures[0]->getName();
+    }
+
+    public function isActive(): bool
+    {
+        return ($this->status === self::STATUS_ACTIVE) ? true : false;
     }
 }

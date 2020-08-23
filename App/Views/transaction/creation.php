@@ -21,7 +21,7 @@
                     <ul>
                         <li><span class="icon_book_alt"></span> <?= $this->twig->translation('view.about.advert') ?> <?= $advert->getId() ?></li>
                         <li><span class="fa fa-truck"></span> <?= $advert->getExpeditionType()->getLabel() ?></li>
-                        <li><span class="fa fa-usd"></span> <b><?= $advert->getPrice() ?></b></li>
+                        <li><span class="fa fa-usd"></span> <b><?= $advert->getPrice()/100 ?></b></li>
                     </ul>
                 </div>
             </div>

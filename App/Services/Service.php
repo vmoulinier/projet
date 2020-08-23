@@ -37,4 +37,34 @@ class Service
     {
         return $this->services->getRepository($entity);
     }
+
+    public function getTranslation(string $name, array $params = []): string
+    {
+        $lang = DEFAULT_LANGAGE;
+
+        if (isset($_SESSION['lang'])) {
+            if ($_SESSION['lang'] === 'en') {
+                $lang = 'en';
+            } elseif ($_SESSION['lang'] === 'fr') {
+                $lang = 'fr';
+            }
+        }
+
+        $translation = $this->getRepository('translations')->findOneBy(['name' => $name]);
+        if ($translation) {
+            $method = 'get' . ucfirst($lang);
+            if (method_exists($translation, $method)) {
+                $str = $translation->$method();
+                foreach ($params as $key => $param) {
+                    $str = str_replace('%'.$key.'%', $param, $str);
+                }
+                return html_entity_decode($str);
+            }
+        }
+        $str = ' ';
+        foreach ($params as $key => $param) {
+            $str .= '%' . $key . '% ';
+        }
+        return html_entity_decode($name . $str);
+    }
 }
