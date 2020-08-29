@@ -10,7 +10,7 @@ class AdminController extends Controller
     {
         parent::__construct($router);
         //if is not logged admin, then acces denied in env prod
-        if (ENV === 'prod') {
+        if (ENV !== 'dev') {
             if(!$this->twig->loggedAdmin()){
                 $this->denied();
             }

@@ -21,9 +21,12 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/', 'home/index', 'index');
         $this->router->map('GET', '/'.PROJECT_NAME.'/index', 'home/index', 'home_index');
         $this->router->map('GET', '/'.PROJECT_NAME.'/lang/[i:id]', 'home/lang', 'home_lang');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/contact', 'home/contact', 'home_contact');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/contact', 'home/contact', 'home_contact_post');
 
         //user
         $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login');
         $this->router->map('POST', '/'.PROJECT_NAME.'/login/[a:fb]?', 'user/login', 'user_login_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/logout', 'user/logout', 'user_logout');
@@ -34,6 +37,7 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/bookmarks', 'user/bookmarks', 'user_bookmarks');
         $this->router->map('GET', '/'.PROJECT_NAME.'/user_transactions', 'user/transactions', 'user_transactions');
         $this->router->map('GET', '/'.PROJECT_NAME.'/invoice/[i:id]', 'user/invoice', 'user_invoice');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/edit_profil', 'user/edit', 'edit_profil');
 
         //admin
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
@@ -52,6 +56,7 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/create_advert', 'advert/create', 'create_advert_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert');
         $this->router->map('POST', '/'.PROJECT_NAME.'/edit_advert/[i:id]', 'advert/edit', 'edit_advert_post');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/add_bookmark', 'advert/addbookmark', 'add_bookmark_post');
 
         //transaction
         $this->router->map('POST', '/'.PROJECT_NAME.'/creation', 'transaction/creation', 'transaction_creation_post');

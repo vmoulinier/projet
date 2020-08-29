@@ -59,10 +59,10 @@ class Controller {
         return false;
     }
 
-    public function redirect($path)
+    public function redirect($path, $param = '')
     {
         try {
-            header('Location: ' . $this->router->generate($path));
+            header('Location: ' . $this->router->generate($path) . $param);
         } catch (\Exception $e) {
         }
     }

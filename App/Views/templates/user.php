@@ -29,7 +29,7 @@
         <?php else: ?>
         <div class="col-md-3">
             <div class="list-group mb-2">
-                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['profil']) ?>" href="<?= $this->router->generate('user_profil') ?>">
+                <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['profil', 'edit_profil']) ?>" href="<?= $this->router->generate('user_profil') ?>">
                     <?= $this->twig->translation('user.nav.profil') ?>
                 </a>
                 <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_adverts', 'create_advert', 'edit_advert']) ?>" href="<?= $this->router->generate('user_adverts') ?>">
@@ -41,8 +41,8 @@
                 <a class="list-group-item list-group-item-action <?= $this->twig->isNavActive(['user_transactions']) ?>" href="<?= $this->router->generate('user_transactions') ?>">
                     <?= $this->twig->translation('user.nav.transactions') ?>
                 </a>
-                <a class="list-group-item list-group-item-action" href="<?= $this->router->generate('user_profil') ?>">
-                    Vestibulum at eros
+                <a class="list-group-item list-group-item-action" href="<?= $this->router->generate('user_logout') ?>">
+                    <?= $this->twig->translation('user.logout') ?>
                 </a>
             </div>
         </div>

@@ -39,7 +39,7 @@
                                     <li><a href="#"><?= $this->twig->translation('home.faq') ?></a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Contact</a></li>
+                            <li class="<?= $this->twig->isNavActive(['advert']) ?>"><a href="<?= $this->router->generate('home_contact') ?>"><?= $this->twig->translation('home.contact') ?></a></li>
                             <li><a href="<?= $this->router->generate('admin_index') ?>"><?= $this->twig->translation('home.admin') ?></a></li>
                         </ul>
                     </nav>

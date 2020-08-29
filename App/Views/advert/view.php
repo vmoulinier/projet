@@ -150,7 +150,8 @@
         $.ajax
         ({
             data: {"fav": <?= $advert->getId() ?>},
-            type: 'post'
+            type: 'post',
+            url: '<?= $this->router->generate("add_bookmark_post") ?>'
         });
         if (!$(this).children().hasClass('text-warning')) {
             $(this).children().addClass('text-warning');

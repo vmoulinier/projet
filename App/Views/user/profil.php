@@ -8,7 +8,7 @@
 <br />
 <a href="#" class="primary-btn btn-profil"><?= $this->twig->translation('profil.edit.password') ?></a>
 <br />
-<a href="#" class="primary-btn btn-profil"><?= $this->twig->translation('profil.edit.informations') ?></a>
+<a href="<?= $this->router->generate("edit_profil") ?>" class="primary-btn btn-profil"><?= $this->twig->translation('profil.edit.informations') ?></a>
 <br />
 <p class="text-center mt-4">
     <a href="#" class="text-dark"><?= $this->twig->translation('profil.newsletter.on') ?></a>

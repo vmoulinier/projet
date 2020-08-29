@@ -1,4 +1,4 @@
-<section class="listing-details spad-xl">
+<section class="listing-details spad-sm">
     <h2 class="center"><?= $this->twig->translation('login.title') ?></h2>
     <br />
     <div class="row">

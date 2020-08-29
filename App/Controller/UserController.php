@@ -43,7 +43,7 @@ class UserController extends Controller
             $profil = $userService->getProfilFacebook();
 
             if (!$userService->loginfb($profil->getEmail(), $profil->getId())) {
-                $error = $userService->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), $profil->getId());
+                $error = $userService->register($profil->getEmail(), $profil->getId(), $profil->getId(), $profil->getLastName() , $profil->getFirstName(), null, null, $profil->getId());
                 $this->addFlashBag($error[0], $error[1]);
                 if (!$error[2]) {
                     $this->template = 'user';
@@ -72,12 +72,15 @@ class UserController extends Controller
             $firstname = $this->request->get('firstname');
             $password = $this->request->get('password');
             $password_verif = $this->request->get('password_verif');
-            $error = $userService->register($email, $password, $password_verif, $name, $firstname);
+            $country = $this->services->getRepository('')->find($this->request->get('country'));
+            $zip = $this->request->get('zip');
+            $error = $userService->register($email, $password, $password_verif, $name, $firstname, $country, $zip);
             $this->addFlashBag($error[0], $error[1]);
         }
 
+        $countries = $this->services->getRepository('country')->findAll();
         $form = new TemplateForm($_POST);
-        $this->render('user/register', compact('form'));
+        $this->render('user/register', compact('form', 'countries'));
     }
 
     public function logout()
@@ -154,6 +157,10 @@ class UserController extends Controller
         $this->template = 'user';
         $user = $this->getCurrentUser();
 
+        if(!$user){
+            $this->redirect('user_login');
+        }
+
         $transactions = $this->services->getRepository('transaction')->findBy(['user' => $user]);
 
         $this->render('user/transactions', compact('transactions'));
@@ -164,15 +171,31 @@ class UserController extends Controller
         if (isset($params['id'])) {
             $user = $this->getCurrentUser();
 
-
             $transaction = $this->services->getRepository('transaction')->find($params['id']);
             $contact = $this->services->getRepository('contact')->findOneBy(['user' => $user]);
             if ($transaction && $transaction->getUser() === $user) {
                 $this->services->getService('pdf')->create('invoices/default', ['transaction' => $transaction, 'contact' => $contact]);
                 die;
             }
-
         }
         $this->denied();
+    }
+
+    public function edit()
+    {
+        $this->template = 'user';
+        $user = $this->getCurrentUser();
+
+        if(!$user){
+            $this->redirect('user_login');
+        }
+
+        if (isset($_GET['infos'])) {
+            $this->addFlashBag('profil.complet', 'danger');
+        }
+
+        $countries = $this->services->getRepository('country')->findAll();
+        $form = new TemplateForm();
+        $this->render('user/edit', compact('user', 'form', 'countries'));
     }
 }

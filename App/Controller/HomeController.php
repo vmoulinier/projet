@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\Controller\Controller;
+use Core\HTML\TemplateForm;
 
 class HomeController extends Controller
 {
@@ -37,5 +38,14 @@ class HomeController extends Controller
         }
 
         header('Location: ' . $referer);
+    }
+
+    public function contact()
+    {
+        $this->template = 'home';
+        $this->title = $this->twig->translation('home.page.contact');
+        $form = new TemplateForm();
+
+        $this->render('home/contact', compact('form'));
     }
 }

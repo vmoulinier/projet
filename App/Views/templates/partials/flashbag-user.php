@@ -9,5 +9,5 @@
 </div>
 
 <script>
-    $("#flashbag-user").delay(4500).fadeOut(1500);
+    $("#flashbag-user").delay(5000).fadeOut(1500);
 </script>

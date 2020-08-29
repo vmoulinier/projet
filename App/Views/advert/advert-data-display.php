@@ -5,7 +5,7 @@
             <div class="listing__item__pic__btns">
                 <a href="<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>" target="_blank"><span class="icon_zoom-in_alt"></span></a>
                 <a href="#" id="map<?= $advert->getId() ?>"><span class="icon_pin_alt"></span></a>
-                <a href="#" id="fav<?= $advert->getId() ?>"><span class="icon_heart_alt"></span></a>
+                <a href="#" id="fav<?= $advert->getId() ?>"><span class="icon_heart_alt <?php if($this->twig->isBookmarked($advert)): ?>icon_heart text-warning<?php endif; ?>"></span></a>
             </div>
         </div>
         <div class="listing__item__text">
@@ -47,7 +47,19 @@
             $('#gmaps').prop('src', url);
         });
         $( "#fav<?= $advert->getId() ?>" ).click(function() {
-
+            $.ajax
+            ({
+                data: {"fav": <?= $advert->getId() ?>},
+                type: 'post',
+                url: '<?= $this->router->generate("add_bookmark_post") ?>'
+            });
+            if (!$(this).children().hasClass('text-warning')) {
+                $(this).children().addClass('text-warning');
+                $(this).children().addClass('icon_heart');
+            } else {
+                $(this).children().removeClass('text-warning');
+                $(this).children().removeClass('icon_heart');
+            }
         });
     </script>
 <?php endforeach; ?>

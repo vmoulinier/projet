@@ -67,10 +67,6 @@ class AdvertController extends Controller
                         $advertService->addAnswer($message, $questionId);
                         $this->addFlashBag('Success, but need to validate');
                     }
-
-                    if ($this->request->get('fav')) {
-                        $advertService->addBookmark($advert, $this->getCurrentUser());
-                    }
                 }
 
                 $pictures = $this->services->getRepository('picture')->findBy(['advert' => $advert]);
@@ -91,6 +87,10 @@ class AdvertController extends Controller
 
         if(!$user){
             $this->redirect('user_login');
+        }
+
+        if (!$user->isCompleted()) {
+            $this->redirect('edit_profil', '?infos');
         }
 
         $advertService = $this->services->getService('advert');
@@ -174,5 +174,25 @@ class AdvertController extends Controller
             }
         }
         $this->denied();
+    }
+
+    public function addbookmark()
+    {
+        $user = $this->getCurrentUser();
+
+        if(!$user){
+            $this->redirect('user_login');
+        }
+
+        if ('POST' === $this->request->getMethod()) {
+            $advertService = $this->services->getService('advert');
+            if ($this->request->get('fav')) {
+                $advert = $this->services->getRepository('advert')->find($this->request->get('fav'));
+                if ($advert) {
+                    $advertService->addBookmark($advert, $this->getCurrentUser());
+                }
+            }
+        }
+        die;
     }
 }

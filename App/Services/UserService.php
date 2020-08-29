@@ -3,12 +3,13 @@
 
 namespace App\Services;
 
+use App\Entity\Country;
 use App\Entity\User;
 
 class UserService extends Service
 {
 
-    public function register(string $email, string $password, string $password_verif, string $name, string $firstname, string $facebook = null): array
+    public function register(string $email, string $password, string $password_verif, string $name, string $firstname, ?Country $country, ?string $zip, string $facebook = null): array
     {
         $users = $this->getRepository('user')->findOneBy(['email' => $email]);
         $error = [];
@@ -22,6 +23,8 @@ class UserService extends Service
                 $user->setEmail($email);
                 $user->setPassword($password);
                 $user->setFacebookId($facebook);
+                $user->setCountry($country);
+                $user->setPostCode($zip);
                 if (ENV === 'dev') {
                     $user->setType('ROLE_ADMIN');
                 }

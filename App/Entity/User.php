@@ -44,14 +44,13 @@ class User
     private $email;
 
     /**
-     * @Column(type="integer", nullable=false)
-     * @var integer
+     * @Column(type="string", nullable=true)
+     * @var string
      */
     private $postCode;
 
     /**
-     * @Column(type="string", nullable=false)
-     * @var string
+     * @ManyToOne(targetEntity="Country", inversedBy="user")
      */
     private $country;
 
@@ -170,36 +169,36 @@ class User
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPostCode(): int
+    public function getPostCode(): ?string
     {
         return $this->postCode;
     }
 
     /**
-     * @param int $postCode
+     * @param string $postCode
      * @return User
      */
-    public function setPostCode(int $postCode): User
+    public function setPostCode(?string $postCode): User
     {
         $this->postCode = $postCode;
         return $this;
     }
 
     /**
-     * @return string
+     * @return Country
      */
-    public function getCountry(): string
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
 
     /**
-     * @param string $country
+     * @param Country $country
      * @return User
      */
-    public function setCountry(string $country): User
+    public function setCountry(?Country $country): User
     {
         $this->country = $country;
         return $this;
@@ -221,6 +220,15 @@ class User
     {
         $this->facebook_id = $facebook_id;
         return $this;
+    }
+
+    public function isCompleted(): bool
+    {
+        if (!$this->getCountry() || !$this->getPostCode()) {
+            return  false;
+        }
+
+        return true;
     }
 
 }
