@@ -23,6 +23,8 @@ class Router {
         $this->router->map('GET', '/'.PROJECT_NAME.'/lang/[i:id]', 'home/lang', 'home_lang');
         $this->router->map('GET', '/'.PROJECT_NAME.'/contact', 'home/contact', 'home_contact');
         $this->router->map('POST', '/'.PROJECT_NAME.'/contact', 'home/contact', 'home_contact_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/about', 'home/about', 'home_about');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/terms', 'home/terms', 'home_terms');
 
         //user
         $this->router->map('GET', '/'.PROJECT_NAME.'/register', 'user/register', 'user_register');

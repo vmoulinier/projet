@@ -48,4 +48,16 @@ class HomeController extends Controller
 
         $this->render('home/contact', compact('form'));
     }
+
+    public function about()
+    {
+        $this->template = 'home';
+        $this->render('home/about');
+    }
+
+    public function terms()
+    {
+        $this->template = 'home';
+        $this->render('home/terms');
+    }
 }

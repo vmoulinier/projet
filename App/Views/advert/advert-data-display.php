@@ -42,7 +42,7 @@
             });
         });
         $( "#map<?= $advert->getId() ?>" ).click(function() {
-            let address = '<?= $advert->getUser()->getPostCode() ?>' + '+' + '<?= $advert->getUser()->getCountry() ?>';
+            let address = '<?= $advert->getUser()->getPostCode() ?>' + '+' + '<?= $advert->getUser()->getCountry()->getLabel() ?>';
             let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';
             $('#gmaps').prop('src', url);
         });

@@ -32,10 +32,9 @@
                             </li>
                             <li><a href="#"><?= $this->twig->translation('home.help') ?></a>
                                 <ul class="dropdown">
-                                    <li><a href="#"><?= $this->twig->translation('help.hiw') ?></a></li>
-                                    <li><a href="#"><?= $this->twig->translation('footer.terms') ?></a></li>
+                                    <li><a href="<?= $this->router->generate('home_terms') ?>"><?= $this->twig->translation('footer.terms') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('footer.privacy.policy') ?></a></li>
-                                    <li><a href="#"><?= $this->twig->translation('help.transaction') ?></a></li>
+                                    <li><a href="<?= $this->router->generate('home_about') ?>"><?= $this->twig->translation('help.transaction') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('home.faq') ?></a></li>
                                 </ul>
                             </li>

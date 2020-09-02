@@ -67,7 +67,7 @@
         <iframe id="gmaps" width="100%" height="170" frameborder="0"></iframe>
     </div>
     <script>
-        let address = '<?= $adverts[0]->getUser()->getPostCode() ?>' + '+' + '<?= $adverts[0]->getUser()->getCountry() ?>';
+        let address = '<?= $adverts[0]->getUser()->getPostCode() ?>' + '+' + '<?= $adverts[0]->getUser()->getCountry()->getLabel() ?>';
         let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';
         $('#gmaps').prop('src', url);
     </script>

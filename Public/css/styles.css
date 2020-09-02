@@ -166,7 +166,19 @@
     font-size: 15px!important;
     letter-spacing: 1px;
 }
+.row .nice-select {
+    width: 100%;
+}
+.row .nice-select ul {
+    width: 100%;
+}
 @media only screen and (max-width: 767px) {
+    .header__logo span {
+        display: none;
+    }
+    .header__logo a {
+        font-size: 0px;
+    }
     .user-container {
         padding: 140px 15px;
     }

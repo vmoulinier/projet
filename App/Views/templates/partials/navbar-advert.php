@@ -23,7 +23,7 @@
                                 </a>
                             </li>
                             <li><a href="<?= $this->router->generate('index') ?>"><?= $this->twig->translation('home.index') ?></a></li>
-                            <li class="<?= $this->twig->isNavActive(['advert']) ?>"><a href="#"><?= $this->twig->translation('advert.index') ?></a>
+                            <li class="<?= $this->twig->isNavActive(['adverts']) ?>"><a href="#"><?= $this->twig->translation('advert.index') ?></a>
                                 <ul class="dropdown">
                                     <li><a href="<?= $this->router->generate('advert_index') ?>"><?= $this->twig->translation('advert.list.advert') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('advert.list.ask') ?></a></li>
@@ -32,10 +32,9 @@
                             </li>
                             <li class="<?= $this->twig->isNavActive(['help']) ?>"><a href="#"><?= $this->twig->translation('home.help') ?></a>
                                 <ul class="dropdown">
-                                    <li><a href="#"><?= $this->twig->translation('help.hiw') ?></a></li>
-                                    <li><a href="#"><?= $this->twig->translation('footer.terms') ?></a></li>
+                                    <li><a href="<?= $this->router->generate('home_terms') ?>"><?= $this->twig->translation('footer.terms') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('footer.privacy.policy') ?></a></li>
-                                    <li><a href="#"><?= $this->twig->translation('help.transaction') ?></a></li>
+                                    <li><a href="<?= $this->router->generate('home_about') ?>"><?= $this->twig->translation('help.transaction') ?></a></li>
                                     <li><a href="#"><?= $this->twig->translation('home.faq') ?></a></li>
                                 </ul>
                             </li>
