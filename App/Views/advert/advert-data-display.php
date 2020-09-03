@@ -1,4 +1,5 @@
 <?php foreach ($adverts as $advert): ?>
+    <?php $rate = $advert->getUser()->getRating(); ?>
     <div class="listing__item">
         <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
             <div class="listing__item__pic__tag pointer" onclick="window.open('<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>')"><?= $advert->getCategory()->getLabel() ?></div>
@@ -14,7 +15,9 @@
                 <div class="listing__item__text__rating">
 
                     <div class="listing__item__rating__star">
+                        <?php if($rate): ?>
                         <div id="rateYo" class="rate<?= $advert->getId() ?>"></div>
+                        <?php endif; ?>
                     </div>
                     <h6><?= $advert->getPrice()/100; ?>€</h6>
                 </div>
@@ -28,19 +31,22 @@
             <div class="listing__item__text__info">
                 <div class="listing__item__text__info__left">
                     <span><?= $advert->getExpeditionType()->getLabel() ?></span>
+
                 </div>
             </div>
         </div>
     </div>
     <script>
+        <?php if($rate): ?>
         $(function () {
             $(".rate<?= $advert->getId() ?>").rateYo({
-                rating: 4.6,
+                rating: <?= $rate ?>,
                 starWidth: "14px",
                 fullStar: true,
                 readOnly: true
             });
         });
+        <?php endif; ?>
         $( "#map<?= $advert->getId() ?>" ).click(function() {
             let address = '<?= $advert->getUser()->getPostCode() ?>' + '+' + '<?= $advert->getUser()->getCountry()->getLabel() ?>';
             let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';

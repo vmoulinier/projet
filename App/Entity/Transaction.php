@@ -69,6 +69,17 @@ class Transaction
     private $user;
 
     /**
+     * @ManyToOne(targetEntity="User", inversedBy="transaction")
+     */
+    private $seller;
+
+    /**
+     * @ManyToOne(targetEntity="Rate", inversedBy="transaction")
+     * @JoinColumn(name="rate_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $rate;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -212,8 +223,44 @@ class Transaction
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSeller()
+    {
+        return $this->seller;
+    }
+
+    /**
+     * @param mixed $seller
+     * @return Transaction
+     */
+    public function setSeller($seller)
+    {
+        $this->seller = $seller;
+        return $this;
+    }
+
     public function getPaypalTaxes()
     {
         return ($this->getAmount() + $this->getDeliveryAmount())*self::PAYPAL_TAXES/100;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    /**
+     * @param mixed $rate
+     * @return Transaction
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+        return $this;
     }
 }

@@ -7,6 +7,7 @@ use App\Entity\Contact;
 use App\Entity\Country;
 use App\Entity\Invoice;
 use App\Entity\InvoiceLine;
+use App\Entity\Rate;
 use App\Entity\Transaction;
 use App\Entity\User;
 
@@ -24,6 +25,7 @@ class TransactionService extends Service
         $transaction->setAmount($advert->getPrice());
         $transaction->setStatus(Transaction::STATUS_PENDING);
         $transaction->setUser($user);
+        $transaction->setSeller($advert->getUser());
         $expeditionsTaxes = $this->getRepository('expeditionTaxes')->findOneBy(['advert' => $advert, 'continent' => $contact->getCountry()->getContinent()]);
         if ($expeditionsTaxes) {
             $transaction->setDeliveryAmount($expeditionsTaxes->getAmount());
@@ -80,5 +82,24 @@ class TransactionService extends Service
         $this->getService('invoice')->finishInvoice($transaction);
         $this->getEntityManager()->flush();
         $this->services->getService('notification')->notify();
+    }
+
+
+    public function setRating(Transaction $transaction, int $rating, string $message): void
+    {
+        if ($transaction->getRate()) {
+            return;
+        }
+
+        $rate = new Rate();
+        $rate->setRate($rating);
+        $rate->setCreatedAt(new \DateTime());
+        $rate->setComment($message);
+        $this->getEntityManager()->persist($rate);
+
+        $transaction->setRate($rate);
+        $this->getEntityManager()->persist($transaction);
+
+        $this->getEntityManager()->flush();
     }
 }

@@ -38,6 +38,7 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/user_adverts', 'user/adverts', 'user_adverts_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/bookmarks', 'user/bookmarks', 'user_bookmarks');
         $this->router->map('GET', '/'.PROJECT_NAME.'/user_transactions', 'user/transactions', 'user_transactions');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/user_transactions', 'user/transactions', 'user_transactions_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/invoice/[i:id]', 'user/invoice', 'user_invoice');
         $this->router->map('GET', '/'.PROJECT_NAME.'/edit_profil', 'user/edit', 'edit_profil');
 

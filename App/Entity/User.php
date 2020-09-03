@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Core\Services\Services;
+
 /**
  * @Entity @Table(name="user")
  */
@@ -231,4 +233,35 @@ class User
         return true;
     }
 
+    public function getRating(): ?int
+    {
+        $rate = 0;
+        $service = new Services();
+        $transactions = $service->getRepository('transaction')->findBy(['seller' => $this]);
+        foreach($transactions as $transaction) {
+            if ($transaction->getRate()) {
+                $rate += $transaction->getRate()->getRate();
+            }
+        }
+
+        if ($rate) {
+            return $rate/count($transactions);
+        }
+
+        return null;
+    }
+
+    public function getTransactionRates(): ?array
+    {
+        $transactionRates = [];
+        $service = new Services();
+        $transactions = $service->getRepository('transaction')->findBy(['seller' => $this]);
+        foreach($transactions as $transaction) {
+            if ($transaction->getRate()) {
+                $transactionRates[] = $transaction;
+            }
+        }
+
+        return $transactionRates;
+    }
 }

@@ -1,3 +1,4 @@
+<?php $rate = $advert->getUser()->getRating(); ?>
 <div class="bg-advert"></div>
 <section class="listing-hero set-bg-advert" data-setbg="<?php if($pictures): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/app_bg2.jpg<?php endif; ?>">
     <div class="container">
@@ -8,16 +9,11 @@
                         <h2><?= $advert->getTitle() ?>
                             <br /><small><?= $advert->getBrand() ?></small>
                         </h2>
+                        <?php if($rate): ?>
                         <div class="listing__hero__widget">
-                            <div class="listing__hero__widget__rating">
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star"></span>
-                                <span class="icon_star-half_alt"></span>
-                            </div>
-                            <div><?= $this->twig->translation('view.review') ?></div>
+                            <div id="rateYo"></div> <span class="text-white"><?= count($advert->getUser()->getTransactionRates()) ?> - <?= $this->twig->translation('view.review') ?></span>
                         </div>
+                        <?php endif; ?>
                         <p><span class="icon_pin_alt"></span> <?= $advert->getUser()->getPostCode() ?>, <?= $advert->getUser()->getCountry()->getLabel() ?></p>
                         <?php if($this->twig->logged() && $this->twig->getCurrentUser() !== $advert->getUser()): ?>
                         <form method="POST" action="<?= $this->router->generate("transaction_creation_post") ?>">
@@ -131,21 +127,47 @@
                         </div>
                     </div>
                 </div>
-
+                <?php if($rate): ?>
                 <div class="listing__sidebar">
                     <div class="listing__sidebar__contact">
                         <div class="listing__sidebar__contact__text">
                             <h4><?= $this->twig->translation('view.rate.title') ?></h4>
-                            <span style="display: inline-flex">4.6 <div id="rateYo"></div></span>
-                            <br /><span>(12 Rating)</span>
+                            <div id="rateYo2"></div>
+                            <br /><span>(<?= count($advert->getUser()->getTransactionRates()) ?> Rating)</span>
+                            <hr />
+                            <?php foreach ($advert->getUser()->getTransactionRates() as $transactionRate): ?>
+                            <?php dump($transactionRate->getUser()->getName()); ?>
+                            <?php dump($transactionRate->getRate()->getRate()); ?>
+                            <?php dump($transactionRate->getRate()->getComment()); ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </section>
+
 <script>
+    <?php if($rate): ?>
+    $(function () {
+        $("#rateYo").rateYo({
+            rating: <?= $rate ?>,
+            starWidth: "14px",
+            fullStar: true,
+            readOnly: true
+        });
+    });
+    $(function () {
+        $("#rateYo2").rateYo({
+            rating: <?= $rate ?>,
+            starWidth: "14px",
+            fullStar: true,
+            readOnly: true
+        });
+    });
+    <?php endif; ?>
     $( '#fav<?= $advert->getId() ?>' ).click(function () {
         $.ajax
         ({
@@ -160,13 +182,5 @@
             $(this).children().removeClass('text-warning');
             $(this).children().removeClass('icon_heart');
         }
-    });
-    $(function () {
-        $("#rateYo").rateYo({
-            rating: 4.6,
-            starWidth: "20px",
-            fullStar: true,
-            readOnly: true
-        });
     });
 </script>

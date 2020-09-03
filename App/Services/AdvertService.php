@@ -9,6 +9,8 @@ use App\Entity\Category;
 use App\Entity\ExpeditionType;
 use App\Entity\Picture;
 use App\Entity\Question;
+use App\Entity\Rate;
+use App\Entity\Transaction;
 use App\Entity\User;
 
 class AdvertService extends Service

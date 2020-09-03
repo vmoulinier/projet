@@ -161,7 +161,20 @@ class UserController extends Controller
             $this->redirect('user_login');
         }
 
-        $transactions = $this->services->getRepository('transaction')->findBy(['user' => $user]);
+        $transactionRepo = $this->services->getRepository('transaction');
+
+        if('POST' === $this->request->getMethod()) {
+            $message = $this->request->get('message');
+            $rating = round($this->request->get('rate'));
+            $transaction = $transactionRepo->find($this->request->get('transaction'));
+
+            if ($transaction->getUser() === $user) {
+                $this->services->getService('transaction')->setRating($transaction, $rating, $message);
+                $this->addFlashBag('transaction.rate.success', 'success');
+            }
+        }
+
+        $transactions = $transactionRepo->findBy(['user' => $user]);
 
         $this->render('user/transactions', compact('transactions'));
     }
