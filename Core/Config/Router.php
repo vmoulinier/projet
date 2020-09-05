@@ -41,6 +41,7 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/user_transactions', 'user/transactions', 'user_transactions_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/invoice/[i:id]', 'user/invoice', 'user_invoice');
         $this->router->map('GET', '/'.PROJECT_NAME.'/edit_profil', 'user/edit', 'edit_profil');
+        $this->router->map('POST', '/'.PROJECT_NAME.'/edit_profil', 'user/edit', 'edit_profil_post');
 
         //admin
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin', 'admin/index', 'admin_index');
@@ -48,6 +49,7 @@ class Router {
         $this->router->map('POST', '/'.PROJECT_NAME.'/admin/translations', 'admin/translations', 'admin_translations_post');
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users');
         $this->router->map('POST', '/'.PROJECT_NAME.'/admin/users', 'admin/users', 'admin_users_post');
+        $this->router->map('GET', '/'.PROJECT_NAME.'/admin/invoices', 'admin/invoices', 'admin_invoices');
         $this->router->map('GET', '/'.PROJECT_NAME.'/admin/relog', 'admin/relog', 'admin_relog');
 
         //advert

@@ -1,4 +1,4 @@
-<?php $contact = $datas['contact']; $invoice = $datas['transaction']->getInvoice(); $totalPrice = ($invoice->getTotalAmount()*0.05)/100; ?>
+<?php $contact = $datas['contact']; $invoice = $datas['transaction']->getInvoice(); $totalPrice = $invoice->getTotalPrice(); ?>
 <style type="text/css">
     table {
         width: 100%;

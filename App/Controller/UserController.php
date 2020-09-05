@@ -203,8 +203,20 @@ class UserController extends Controller
             $this->redirect('user_login');
         }
 
-        if (isset($_GET['infos'])) {
+        if (isset($_GET['infos']) && !$user->isCompleted()) {
             $this->addFlashBag('profil.complet', 'danger');
+        }
+
+        if('POST' === $this->request->getMethod()) {
+            $name = $this->request->get('name');
+            $firstname = $this->request->get('firstname');
+            $zip = $this->request->get('zip');
+            $country = $this->services->getRepository('country')->find($this->request->get('country'));
+
+            if ($country) {
+                $this->services->getService('user')->edit($name, $firstname, (string) $zip, $country, $user);
+                $this->addFlashBag('edit.profil.success', 'success');
+            }
         }
 
         $countries = $this->services->getRepository('country')->findAll();

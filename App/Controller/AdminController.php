@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Invoice;
 use Core\Controller\Controller;
 
 class AdminController extends Controller
@@ -92,5 +93,12 @@ class AdminController extends Controller
         $_SESSION['user_id'] = $_SESSION['edit_admin_id'];
         unset($_SESSION['edit_admin_id']);
         $this->redirect('index');
+    }
+
+    public function invoices()
+    {
+        $invoices = $this->services->getRepository('invoice')->findBy(['status' => Invoice::STATUS_CLEARED]);
+        $this->template = 'admin';
+        $this->render('admin/invoices', compact('invoices'));
     }
 }

@@ -79,6 +79,16 @@ class UserService extends Service
         $this->saveSession($user->getId());
     }
 
+    public function edit(string $name, string $firstname, string $zip, Country $country, User $user): void
+    {
+        $user->setName($name);
+        $user->setFirstname($firstname);
+        $user->setPostCode($zip);
+        $user->setCountry($country);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
     public function saveSession(int $id)
     {
         $_SESSION['user_id'] = $id;

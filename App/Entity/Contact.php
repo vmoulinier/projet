@@ -183,18 +183,18 @@ class Contact
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPhoneNumber(): int
+    public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
 
     /**
-     * @param int $phoneNumber
+     * @param string $phoneNumber
      * @return Contact
      */
-    public function setPhoneNumber(int $phoneNumber): Contact
+    public function setPhoneNumber(string $phoneNumber): Contact
     {
         $this->phoneNumber = $phoneNumber;
         return $this;

@@ -1,4 +1,3 @@
-<?php dump($user); ?>
 <section class="listing-details">
     <h2 class="center"><?= $this->twig->translation('profil.edit.title') ?></h2>
     <br />
@@ -6,9 +5,6 @@
         <div class="col-lg-8 offset-lg-2">
             <form method="post">
                 <div class="row">
-                    <div class="col-md-12">
-                        <?= $form->input('email', $this->twig->translation('profil.email'), ['type' => 'email', 'value' => $user->getEmail()]); ?>
-                    </div>
                     <div class="col-md-6">
                         <?= $form->input('name', $this->twig->translation('profil.name'), ['type' => 'text', 'value' => $user->getName()]); ?>
                     </div>

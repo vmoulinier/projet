@@ -233,7 +233,7 @@ class User
         return true;
     }
 
-    public function getRating(): ?int
+    public function getRating()
     {
         $rate = 0;
         $service = new Services();

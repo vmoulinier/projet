@@ -227,4 +227,9 @@ class Invoice
 
         return $price;
     }
+
+    public function getTotalPrice()
+    {
+        return ($this->getTotalAmount()*0.05)/100;
+    }
 }

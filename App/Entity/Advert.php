@@ -15,7 +15,7 @@ class Advert
 
     const STATUS_ACTIVE = 'active';
 
-    const STATUS_PURSHASED = 'purshased';
+    const STATUS_PURCHASED = 'purchased';
 
     const STATUS_LOCKED = 'locked';
 

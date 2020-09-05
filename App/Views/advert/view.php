@@ -15,11 +15,15 @@
                         </div>
                         <?php endif; ?>
                         <p><span class="icon_pin_alt"></span> <?= $advert->getUser()->getPostCode() ?>, <?= $advert->getUser()->getCountry()->getLabel() ?></p>
-                        <?php if($this->twig->logged() && $this->twig->getCurrentUser() !== $advert->getUser()): ?>
+                        <?php if($this->twig->logged() && $this->twig->getCurrentUser() !== $advert->getUser() && \App\Entity\Advert::STATUS_ACTIVE === $advert->getStatus()): ?>
                         <form method="POST" action="<?= $this->router->generate("transaction_creation_post") ?>">
                             <?= $form->input('advert', $advert->getId(), ['type' => 'hidden']); ?>
                             <?= $form->submit($this->twig->translation('advert.buy')); ?>
                         </form>
+                        <?php elseif (\App\Entity\Advert::STATUS_PURCHASED === $advert->getStatus()): ?>
+                        <div class="btn btn-info">
+                            <?= $this->twig->translation('advert.purchased') ?>
+                        </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -132,13 +136,25 @@
                     <div class="listing__sidebar__contact">
                         <div class="listing__sidebar__contact__text">
                             <h4><?= $this->twig->translation('view.rate.title') ?></h4>
-                            <div id="rateYo2"></div>
-                            <br /><span>(<?= count($advert->getUser()->getTransactionRates()) ?> Rating)</span>
-                            <hr />
                             <?php foreach ($advert->getUser()->getTransactionRates() as $transactionRate): ?>
-                            <?php dump($transactionRate->getUser()->getName()); ?>
-                            <?php dump($transactionRate->getRate()->getRate()); ?>
-                            <?php dump($transactionRate->getRate()->getComment()); ?>
+                                <hr />
+                                <span class="d-inline-flex align-items-baseline mb-0 bold">
+                                    <?= $transactionRate->getUser()->getName(); ?> <?= $transactionRate->getUser()->getFirstName(); ?> - <div id="rating<?= $transactionRate->getId(); ?>"></div>
+                                </span>
+
+                                <div class="alert alert-primary mt-2">
+                                    <p><?= $transactionRate->getRate()->getComment(); ?></p>
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("#rating<?= $transactionRate->getId(); ?>").rateYo({
+                                            rating: <?= $transactionRate->getRate()->getRate() ?>,
+                                            starWidth: "14px",
+                                            fullStar: true,
+                                            readOnly: true
+                                        });
+                                    });
+                                </script>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -155,15 +171,6 @@
         $("#rateYo").rateYo({
             rating: <?= $rate ?>,
             starWidth: "14px",
-            fullStar: true,
-            readOnly: true
-        });
-    });
-    $(function () {
-        $("#rateYo2").rateYo({
-            rating: <?= $rate ?>,
-            starWidth: "14px",
-            fullStar: true,
             readOnly: true
         });
     });

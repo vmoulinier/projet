@@ -66,7 +66,7 @@ class TransactionService extends Service
         $advert = $transaction->getInvoice()->getAdvert();
         $transaction->setStatus(Transaction::STATUS_FINISHED);
         $this->getEntityManager()->persist($transaction);
-        $advert->setStatus(Advert::STATUS_PURSHASED);
+        $advert->setStatus(Advert::STATUS_PURCHASED);
         $this->getService('invoice')->finishInvoice($transaction);
         $this->getEntityManager()->flush();
         $this->services->getService('notification')->notify();

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Advert;
 use App\Entity\Transaction;
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
@@ -22,7 +23,7 @@ class TransactionController extends Controller
         if('POST' === $this->request->getMethod() && $this->request->get('submit')) {
             $advert = $this->services->getRepository('advert')->find($this->request->get('advert'));
             $user = $this->getCurrentUser();
-            if ($advert && $advert->getUser() !== $user) {
+            if ($advert && $advert->getUser() !== $user && Advert::STATUS_ACTIVE === $advert->getStatus()) {
                 $form = new TemplateForm();
                 $contact = $this->services->getRepository('contact')->findOneBy(['user' => $user]);
                 $countries = $this->services->getRepository('country')->findAll();

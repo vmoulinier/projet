@@ -14,8 +14,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <?php foreach($transactions as $transaction): ?>
+        <?php foreach($transactions as $transaction): ?>
+            <tr>
                 <td><p class="card-text"><?= $transaction->getCreatedAt()->format('Y-m-d') ?></p></td>
                 <td><p class="card-text"><?= $transaction->getType() ?></p></td>
                 <td><p class="card-text"><?= $transaction->getInvoice()->getType() ?></p></td>
@@ -83,9 +83,8 @@
                         </script>
                     <?php endif; ?>
                 </td>
-
-            <?php endforeach; ?>
-        </tr>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 <?php else: ?>
