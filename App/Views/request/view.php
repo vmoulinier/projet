@@ -1,37 +1,27 @@
-<?php $rate = $advert->getUser()->getRating(); ?>
+<?php $rate = $request->getUser()->getRating(); ?>
 <div class="bg-advert"></div>
-<section class="listing-hero set-bg-advert" data-setbg="<?php if($pictures): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/app_bg2.jpg<?php endif; ?>">
+<section class="listing-hero set-bg-advert" data-setbg="<?php if($pictures): ?><?= $request->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/app_bg2.jpg<?php endif; ?>">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="listing__hero__option">
                     <div class="listing__hero__text">
-                        <h2><?= $advert->getTitle() ?>
-                            <br /><small><?= $advert->getBrand() ?></small>
+                        <h2><?= $request->getTitle() ?>
+                            <br /><small><?= $request->getBrand() ?></small>
                         </h2>
                         <?php if($rate): ?>
                         <div class="listing__hero__widget">
-                            <div id="rateYo"></div> <span class="text-white"><?= count($advert->getUser()->getTransactionRates()) ?> - <?= $this->twig->translation('view.review') ?></span>
+                            <div id="rateYo"></div> <span class="text-white"><?= count($request->getUser()->getTransactionRates()) ?> - <?= $this->twig->translation('view.review') ?></span>
                         </div>
                         <?php endif; ?>
-                        <p><span class="icon_pin_alt"></span> <?= $advert->getUser()->getPostCode() ?>, <?= $advert->getUser()->getCountry()->getLabel() ?></p>
-                        <?php if($this->twig->logged() && $this->twig->getCurrentUser()->getId() !== $advert->getUser()->getId() && \App\Entity\Advert::STATUS_ACTIVE === $advert->getStatus()): ?>
-                        <form method="POST" action="<?= $this->router->generate("transaction_creation_post") ?>">
-                            <?= $form->input('advert', $advert->getId(), ['type' => 'hidden']); ?>
-                            <?= $form->submit($this->twig->translation('advert.buy')); ?>
-                        </form>
-                        <?php elseif (\App\Entity\Advert::STATUS_PURCHASED === $advert->getStatus()): ?>
-                        <div class="btn btn-info">
-                            <?= $this->twig->translation('advert.purchased') ?>
-                        </div>
-                        <?php endif; ?>
+                        <p><span class="icon_pin_alt"></span> <?= $request->getUser()->getPostCode() ?>, <?= $request->getUser()->getCountry()->getLabel() ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4">
                 <?php if($this->twig->logged()): ?>
                 <div class="listing__item__pic__btns">
-                    <a id="fav<?= $advert->getId() ?>" class="pointer"><span class="icon_heart_alt <?php if($this->twig->isBookmarked($advert)): ?>icon_heart text-warning<?php endif; ?>"></span></a>
+                    <a id="fav<?= $request->getId() ?>" class="pointer"><span class="icon_heart_alt <?php if($this->twig->isBookmarked($request)): ?>icon_heart text-warning<?php endif; ?>"></span></a>
                 </div>
                 <?php endif; ?>
             </div>
@@ -45,9 +35,9 @@
                 <div class="listing__details__text">
                     <div class="listing__details__about">
                         <h4>Overview</h4>
-                        <p><?= $advert->getDescription(); ?></p>
+                        <p><?= $request->getDescription(); ?></p>
                         <br />
-                        <p><small><?= $this->twig->translation('purchase.date') ?> <?= $advert->getPurchasedAt()->format('Y-m-d') ?></small></p>
+                        <p><small><?= $this->twig->translation('purchase.date') ?> <?= $request->getPurchasedAt()->format('Y-m-d') ?></small></p>
                     </div>
                     <?php if($pictures): ?>
                     <div class="listing__details__gallery">
@@ -55,7 +45,7 @@
                         <div class="listing__details__gallery__pic">
                             <div class="listing__details__gallery__item">
                                 <img class="listing__details__gallery__item__large" <?php if($this->twig->isMobile()): ?>style="height: 350px"<?php else: ?>style="height: 450px"<?php endif; ?>
-                                     src="<?= $advert->getLinkFirstPictures() ?>" alt="">
+                                     src="<?= $request->getLinkFirstPictures() ?>" alt="">
                                 <span><i class="fa fa-camera"></i> <?= count($pictures) ?> <?= $this->twig->translation('view.images') ?></span>
                             </div>
                             <div class="listing__details__gallery__slider owl-carousel">
@@ -84,7 +74,7 @@
                                         <div class="alert alert-secondary bg-light ml-4"><?= $answer->getMessage() ?></div>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
-                                <?php if($this->twig->logged() && ($advert->getUser()->getId() === $this->twig->getCurrentUser()->getId())): ?>
+                                <?php if($this->twig->logged() && ($request->getUser() === $this->twig->getCurrentUser())): ?>
                                 <form method="post" class="ml-4">
                                     <div class="form-group mt-2">
                                         <textarea rows="3" name="answer" class="form-control" placeholder="<?= $this->twig->translation('placeholder.answer') ?>" required=""></textarea>
@@ -116,7 +106,7 @@
 
                             <iframe id="gmaps" height="200" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                             <script>
-                                let address = '<?= $advert->getUser()->getPostCode() ?>' + '+' + '<?= $advert->getUser()->getCountry()->getLabel() ?>';
+                                let address = '<?= $request->getUser()->getPostCode() ?>' + '+' + '<?= $request->getUser()->getCountry()->getLabel() ?>';
                                 let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';
                                 $('#gmaps').prop('src', url);
                             </script>
@@ -125,9 +115,9 @@
                         <div class="listing__sidebar__contact__text">
                             <h4><?= $this->twig->translation('view.about.title') ?></h4>
                             <ul>
-                                <li><span class="icon_book_alt"></span> <?= $this->twig->translation('view.about.advert') ?> <?= $advert->getId() ?></li>
-                                <li><span class="icon_search"></span> <?= $advert->getViews() ?> <?= $this->twig->translation('view.about.views') ?></li>
-                                <li><span class="fa fa-truck"></span> <?= $this->twig->translation($advert->getExpeditionType()->getLabel()) ?></li>
+                                <li><span class="icon_book_alt"></span> <?= $this->twig->translation('view.about.advert') ?> <?= $request->getId() ?></li>
+                                <li><span class="icon_search"></span> <?= $request->getViews() ?> <?= $this->twig->translation('view.about.views') ?></li>
+                                <li><span class="fa fa-truck"></span> <?= $this->twig->translation($request->getExpeditionType()->getLabel()) ?></li>
                                 <li><span class="icon_mail_alt"></span> <a href="#"><?= $this->twig->translation('view.about.contact') ?></a></li>
                             </ul>
                         </div>
@@ -138,7 +128,7 @@
                     <div class="listing__sidebar__contact">
                         <div class="listing__sidebar__contact__text">
                             <h4><?= $this->twig->translation('view.rate.title') ?></h4>
-                            <?php foreach ($advert->getUser()->getTransactionRates() as $transactionRate): ?>
+                            <?php foreach ($request->getUser()->getTransactionRates() as $transactionRate): ?>
                                 <hr />
                                 <span class="d-inline-flex align-items-baseline mb-0 bold">
                                     <?= $transactionRate->getUser()->getName(); ?> <?= $transactionRate->getUser()->getFirstName(); ?> - <div id="rating<?= $transactionRate->getId(); ?>"></div>
@@ -177,10 +167,10 @@
         });
     });
     <?php endif; ?>
-    $( '#fav<?= $advert->getId() ?>' ).click(function () {
+    $( '#fav<?= $request->getId() ?>' ).click(function () {
         $.ajax
         ({
-            data: {"fav": <?= $advert->getId() ?>},
+            data: {"fav": <?= $request->getId() ?>},
             type: 'post',
             url: '<?= $this->router->generate("add_bookmark_post") ?>'
         });

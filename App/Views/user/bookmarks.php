@@ -31,7 +31,7 @@
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <span><?= $advert->getExpeditionType()->getLabel() ?></span>
+                            <span><?= $this->twig->translation($advert->getExpeditionType()->getLabel()) ?></span>
                         </div>
                     </div>
                 </div>

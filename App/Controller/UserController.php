@@ -184,6 +184,10 @@ class UserController extends Controller
         if (isset($params['id'])) {
             $user = $this->getCurrentUser();
 
+            if(!$user){
+                $this->redirect('user_login');
+            }
+
             $transaction = $this->services->getRepository('transaction')->find($params['id']);
             $contact = $this->services->getRepository('contact')->findOneBy(['user' => $user]);
             if ($transaction && $transaction->getUser() === $user) {

@@ -9,23 +9,16 @@
         <div class="filter__select">
             <select name="category">
                 <option value=""><?= $this->twig->translation('advert.index.choose.categories') ?></option>
-                <?php /** @var $advertsCategorie \App\Entity\Advert  */?>
                 <?php foreach ($advertsCategories as $advertsCategorie): ?>
-                    <option <?= $this->twig->isSelected('category', $advertsCategorie->getCategory()->getId()) ?> value="<?= $advertsCategorie->getCategory()->getId() ?>">
-                        <?= $advertsCategorie->getCategory()->getLabel() ?> &lt;span class=&quot;badge badge-secondary&quot;> <?= $this->twig->getQteCategorie($advertsCategorie->getCategory()->getId()) ?>&lt;/span&gt;
-                    </option>
+                    <option <?= $this->twig->isSelected('category', $advertsCategorie->getCategory()->getId()) ?> value="<?= $advertsCategorie->getCategory()->getId() ?>"><?= $advertsCategorie->getCategory()->getLabel() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
-        <?= $this->twig->getQteLocation(33000) ?>
         <div class="filter__select">
             <select name="location">
                 <option value=""><?= $this->twig->translation('advert.index.choose.location') ?></option>
-                <?php /** @var $usersLocation \App\Entity\User  */ ?>
                 <?php foreach ($usersLocations as $usersLocation): ?>
-                    <option <?= $this->twig->isSelected('location', $usersLocation->getPostCode()) ?> value="<?= $usersLocation->getPostCode() ?>">
-                        <?= $usersLocation->getPostCode() ?> &lt;span class=&quot;badge badge-secondary&quot;> <?= $this->twig->getQteLocation($usersLocation->getPostCode()) ?>&lt;/span&gt;
-                    </option>
+                    <option <?= $this->twig->isSelected('location', $usersLocation->getPostCode()) ?> value="<?= $usersLocation->getPostCode() ?>"><?= $usersLocation->getPostCode() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -69,12 +62,12 @@
     init("<?= $this->twig->translation('advert.index.data.message.1') ?>", "<?= $this->twig->translation('advert.index.data.message.2') ?>")
 </script>
 
-<?php if(!$this->twig->isMobile() && $adverts): ?>
+<?php if(!$this->twig->isMobile() && $requests): ?>
     <div class="listing__map">
         <iframe id="gmaps" width="100%" height="170" frameborder="0"></iframe>
     </div>
     <script>
-        let address = '<?= $adverts[0]->getUser()->getPostCode() ?>' + '+' + '<?= $adverts[0]->getUser()->getCountry()->getCode() ?>';
+        let address = '<?= $requests[0]->getUser()->getPostCode() ?>' + '+' + '<?= $requests[0]->getUser()->getCountry()->getCode() ?>';
         let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';
         $('#gmaps').prop('src', url);
     </script>

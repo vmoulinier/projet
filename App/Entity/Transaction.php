@@ -226,7 +226,7 @@ class Transaction
     /**
      * @return mixed
      */
-    public function getSeller()
+    public function getSeller(): ?User
     {
         return $this->seller;
     }

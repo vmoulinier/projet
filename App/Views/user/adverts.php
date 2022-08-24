@@ -21,7 +21,7 @@
                 </div>
                 <div class="listing__item__text">
                     <div class="listing__item__text__inside">
-                        <h5 class="pointer mt-1" onclick="window.open('<?= $this->router->generate("edit_advert", ["id" => $advert->getId()]) ?>')"><?= $advert->getTitle() ?></h5>
+                        <h5 class="pointer mt-1" onclick="window.open('<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>')"><?= $advert->getTitle() ?></h5>
                         <div class="listing__item__text__rating">
                             <h6 class="float-none"><?= $advert->getPrice()/100; ?>€</h6>
                         </div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="listing__item__text__info">
                         <div class="listing__item__text__info__left">
-                            <span><?= $advert->getExpeditionType()->getLabel() ?></span>
+                            <span><?= $this->twig->translation($advert->getExpeditionType()->getLabel()) ?></span>
                         </div>
                     </div>
                 </div>

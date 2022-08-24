@@ -1,36 +1,36 @@
-<?php foreach ($adverts as $advert): ?>
-    <?php $rate = $advert->getUser()->getRating(); ?>
+<?php foreach ($requests as $request): ?>
+    <?php $rate = $request->getUser()->getRating(); ?>
     <div class="listing__item">
-        <div class="listing__item__pic set-bg" data-setbg="<?php if($advert->getAdvertPictures()): ?><?= $advert->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
-            <div class="listing__item__pic__tag pointer" onclick="window.open('<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>')"><?= $advert->getCategory()->getLabel() ?></div>
+        <div class="listing__item__pic set-bg" data-setbg="<?php if($request->getAdvertPictures()): ?><?= $request->getLinkFirstPictures() ?><?php else: ?><?= PATH ?>/Public/img/listing/list-1.jpg<?php endif; ?>">
+            <div class="listing__item__pic__tag pointer" onclick="window.open('<?= $this->router->generate("request_view", ["id" => $request->getId()]) ?>')"><?= $request->getCategory()->getLabel() ?></div>
             <div class="listing__item__pic__btns">
-                <a href="<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>" target="_blank"><span class="icon_zoom-in_alt"></span></a>
-                <a href="#" id="map<?= $advert->getId() ?>"><span class="icon_pin_alt"></span></a>
-                <a href="#" id="fav<?= $advert->getId() ?>"><span class="icon_heart_alt <?php if($this->twig->isBookmarked($advert)): ?>icon_heart text-warning<?php endif; ?>"></span></a>
+                <a href="<?= $this->router->generate("request_view", ["id" => $request->getId()]) ?>" target="_blank"><span class="icon_zoom-in_alt"></span></a>
+                <a href="#" id="map<?= $request->getId() ?>"><span class="icon_pin_alt"></span></a>
+                <a href="#" id="fav<?= $request->getId() ?>"><span class="icon_heart_alt <?php if($this->twig->isBookmarked($request)): ?>icon_heart text-warning<?php endif; ?>"></span></a>
             </div>
         </div>
         <div class="listing__item__text">
             <div class="listing__item__text__inside">
-                <h5 class="pointer" onclick="window.open('<?= $this->router->generate("advert_view", ["id" => $advert->getId()]) ?>')"><?= $advert->getTitle() ?></h5>
+                <h5 class="pointer" onclick="window.open('<?= $this->router->generate("request_view", ["id" => $request->getId()]) ?>')"><?= $request->getTitle() ?></h5>
                 <div class="listing__item__text__rating">
 
                     <div class="listing__item__rating__star">
                         <?php if($rate): ?>
-                        <div id="rateYo" class="rate<?= $advert->getId() ?>"></div>
+                        <div id="rateYo" class="rate<?= $request->getId() ?>"></div>
                         <?php endif; ?>
                     </div>
-                    <h6><?= $advert->getPrice()/100; ?>€</h6>
+                    <h6><?= $request->getPrice()/100; ?>€</h6>
                 </div>
-                <p><?= $advert->getDescription() ?></p>
+                <p><?= $request->getDescription() ?></p>
                 <ul>
                     <li>
-                        <span class="icon_pin_alt"></span> <?= $advert->getUser()->getPostCode(); ?>
+                        <span class="icon_pin_alt"></span> <?= $request->getUser()->getPostCode(); ?>
                     </li>
                 </ul>
             </div>
             <div class="listing__item__text__info">
                 <div class="listing__item__text__info__left">
-                    <span><?= $this->twig->translation($advert->getExpeditionType()->getLabel()) ?></span>
+                    <span><?= $this->twig->translation($request->getExpeditionType()->getLabel()) ?></span>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
     <script>
         <?php if($rate): ?>
         $(function () {
-            $(".rate<?= $advert->getId() ?>").rateYo({
+            $(".rate<?= $request->getId() ?>").rateYo({
                 rating: <?= $rate ?>,
                 starWidth: "14px",
                 fullStar: true,
@@ -46,16 +46,16 @@
             });
         });
         <?php endif; ?>
-        $( "#map<?= $advert->getId() ?>" ).click(function() {
-            let address = '<?= $advert->getUser()->getPostCode() ?>' + '+' + '<?= $advert->getUser()->getCountry()->getCode() ?>';
+        $( "#map<?= $request->getId() ?>" ).click(function() {
+            let address = '<?= $request->getUser()->getPostCode() ?>' + '+' + '<?= $request->getUser()->getCountry()->getCode() ?>';
             console.log(address);
             let url = 'https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=' + address + '&z=11&output=embed';
             $('#gmaps').prop('src', url);
         });
-        $( "#fav<?= $advert->getId() ?>" ).click(function() {
+        $( "#fav<?= $request->getId() ?>" ).click(function() {
             $.ajax
             ({
-                data: {"fav": <?= $advert->getId() ?>},
+                data: {"fav": <?= $request->getId() ?>},
                 type: 'post',
                 url: '<?= $this->router->generate("add_bookmark_post") ?>'
             });

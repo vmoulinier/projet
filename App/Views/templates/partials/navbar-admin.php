@@ -2,6 +2,7 @@
     <a class="p-2 text-dark" href="<?= $this->router->generate('admin_index') ?>"><?= $this->twig->translation('home.admin') ?></a>
     <a class="p-2 text-dark " href="<?= $this->router->generate('admin_translations') ?>"><?= $this->twig->translation('home.translate') ?></a>
     <a class="p-2 text-dark " href="<?= $this->router->generate('admin_invoices') ?>"><?= $this->twig->translation('admin.invoices') ?></a>
+    <a class="p-2 text-dark " href="<?= $this->router->generate('admin_adverts') ?>"><?= $this->twig->translation('admin.adverts') ?></a>
     <a class="p-2 text-dark mr-md-auto" href="<?= $this->router->generate('admin_users') ?>"><?= $this->twig->translation('admin.users') ?></a>
     <a class="btn btn-sm btn-primary" href="<?= $this->router->generate('index') ?>"><?= $this->twig->translation('home.index') ?></a>
     <?php if(isset($_SESSION['edit_admin_id'])): ?>

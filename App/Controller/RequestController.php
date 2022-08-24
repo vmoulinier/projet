@@ -3,11 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Advert;
-use App\Entity\User;
 use Core\Controller\Controller;
 use Core\HTML\TemplateForm;
 
-class AdvertController extends Controller
+class RequestController extends Controller
 {
 
     public function index()
@@ -15,7 +14,7 @@ class AdvertController extends Controller
         $advertRepo = $this->services->getRepository('advert');
         $advertsCategories = $advertRepo->findAllCategoryAdverts();
         $usersLocations = $this->services->getRepository('user')->findAllPostcodeUsers();
-        $adverts = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE, 'type' => 1], ['id' => 'DESC']);
+        $requests = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE, 'type' => 2], ['id' => 'DESC']);
 
         if ('POST' === $this->request->getMethod()) {
             $limit = $this->request->get('limit');
@@ -24,7 +23,7 @@ class AdvertController extends Controller
             if (isset($limit, $start)) {
 
                 if (!$this->request->get('search')) {
-                    $adverts = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE, 'type' => 1],  ['id' => 'DESC'], $limit, $start);
+                    $requests = $advertRepo->findBy(['status' => Advert::STATUS_ACTIVE, 'type' => 2],  ['id' => 'DESC'], $limit, $start);
                 }
 
                 if ($this->request->get('search')) {
@@ -32,39 +31,39 @@ class AdvertController extends Controller
                     $category = $this->request->get('category');
                     $location = $this->request->get('location');
                     $price = $this->request->get('price');
-                    $adverts = $advertRepo->search($name, $category, $location, $price, $limit, $start);
+                    $requests = $advertRepo->search($name, $category, $location, $price, $limit, $start, 2);
                 }
 
                 $this->template = 'disable';
-                $this->render('advert/advert-data-display', compact('adverts'));
+                $this->render('request/request-data-display', compact('requests'));
                 die;
             }
         }
 
         $this->template = 'advert';
         $this->title = $this->twig->translation('advert.page.title');
-        $this->render('advert/index', compact('adverts', 'advertsCategories', 'usersLocations'));
+        $this->render('request/index', compact('requests', 'advertsCategories', 'usersLocations'));
     }
 
-    public function viewadvert(array $params)
+    public function viewrequest(array $params)
     {
         if (isset($params['id'])) {
-            $advert = $this->services->getRepository('advert')->find($params['id']);
+            $request = $this->services->getRepository('advert')->find($params['id']);
 
-            if ($advert) {
+            if ($request) {
                 $advertService = $this->services->getService('advert');
-                $advertService->setView($advert);
+                $advertService->setView($request);
                 $user = $this->getCurrentUser();
 
                 if ('POST' === $this->request->getMethod()) {
 
-                    if ($this->request->get('submitReview')) {
+                    if ($this->request->get('submitReview') && $user) {
                         $message = $this->request->get('message');
-                        $advertService->addQuestion($message, $advert, $user);
+                        $advertService->addQuestion($message, $request, $user);
                         $this->addFlashBag('Success, but need to validate');
                     }
 
-                    if ($this->request->get('submitAnswer') && ($user === $advert->getUser())) {
+                    if ($this->request->get('submitAnswer') && ($user === $request->getUser())) {
                         $message = $this->request->get('answer');
                         $questionId = $this->request->get('question_id');
                         $advertService->addAnswer($message, $questionId);
@@ -72,12 +71,12 @@ class AdvertController extends Controller
                     }
                 }
 
-                $pictures = $this->services->getRepository('picture')->findBy(['advert' => $advert]);
-                $questions = $this->services->getRepository('question')->findBy(['advert' => $advert]);
+                $pictures = $this->services->getRepository('picture')->findBy(['advert' => $request]);
+                $questions = $this->services->getRepository('question')->findBy(['advert' => $request]);
                 $this->template = 'default';
-                $this->title = $advert->getTitle();
+                $this->title = $request->getTitle();
                 $form = new TemplateForm();
-                $this->render('advert/view', compact('advert', 'pictures', 'questions', 'form'));
+                $this->render('request/view', compact('request', 'pictures', 'questions', 'form'));
             }
         }
         $this->denied();
@@ -126,16 +125,10 @@ class AdvertController extends Controller
     {
         if (isset($params['id'])) {
             $this->template = 'user';
-
-            /** @var User $user */
             $user = $this->getCurrentUser();
 
             if(!$user){
                 $this->redirect('user_login');
-            }
-
-            if (isset($params['admin'])) {
-                $this->template = 'admin';
             }
 
             $advertRepo = $this->services->getRepository('advert');
@@ -145,7 +138,7 @@ class AdvertController extends Controller
             $pictureService = $this->services->getService('picture');
             $advert = $advertRepo->find($params['id']);
 
-            if ($advert && $advert->getUser() === $user || $user->isAdmin()) {
+            if ($advert && $advert->getUser() === $user) {
                 $expeditionRepo = $this->services->getRepository('expeditionType');
                 if ('POST' === $this->request->getMethod()) {
                     if ($this->request->get('submit')) {
@@ -172,7 +165,6 @@ class AdvertController extends Controller
                         $picture = $pictureRepo->find($this->request->get('delete'));
                         $pictureService->delete($picture);
                     }
-
                 }
 
                 $form = new TemplateForm();

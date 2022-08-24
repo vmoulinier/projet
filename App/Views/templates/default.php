@@ -10,7 +10,6 @@
     <?php require_once 'App/Views/templates/partials/flashbag.php'; ?>
 <?php endif; ?>
 
-
 <?= $content; ?>
 
 <?php require_once 'App/Views/templates/partials/footer.php'; ?>

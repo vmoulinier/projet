@@ -22,13 +22,14 @@ class AdvertService extends Service
         $advert->setTitle($title) ;
         $advert->setCategory($category) ;
         $advert->setUser($user);
-        $advert->setPrice($price);
+        $advert->setPrice($price*100);
         $advert->setDescription($description);
         $advert->setBrand($brand);
         $advert->setShape($shape);
         $advert->setPurchasedAt($purchasedat);
         $advert->setExpeditionType($expeditiontype);
         $advert->setGuarantee(0);
+        $advert->setStatus(Advert::STATUS_PENDING);
         if ($guarantee) {
             $advert->setGuarantee(1);
         }
@@ -100,6 +101,25 @@ class AdvertService extends Service
         ($advert->getStatus() !== Advert::STATUS_LOCKED) ? $advert->setStatus(Advert::STATUS_LOCKED) : $advert->setStatus(Advert::STATUS_ACTIVE);
         $this->getEntityManager()->persist($advert);
         $this->getEntityManager()->flush();
+    }
+
+    public function validateAdmin(int $id): void
+    {
+        $advert = $this->getRepository('advert')->find($id);
+        if ($advert) {
+            $advert->setStatus(Advert::STATUS_ACTIVE);
+            $this->getEntityManager()->persist($advert);
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function deleteAdmin(int $id): void
+    {
+        $advert = $this->getRepository('advert')->find($id);
+        if ($advert) {
+            $this->getEntityManager()->remove($advert);
+            $this->getEntityManager()->flush();
+        }
     }
 
     public function setView(Advert $advert): void

@@ -1,6 +1,9 @@
 .center {
     text-align: center;
 }
+.w-33 {
+    width: 33% !important;
+}
 .blue {
     color : #204d74;
 }

@@ -1,10 +1,12 @@
 <?php
 
+
 namespace App\Services;
+
 
 use Core\Services\Services;
 
-class NotificationService extends Service
+class EmailingService extends Service
 {
     /** @var MailjetService  */
     private $mj;
@@ -16,10 +18,5 @@ class NotificationService extends Service
     {
         parent::__construct($services);
         $this->mj = $this->getService('mailjet');
-    }
-
-    public function notify()
-    {
-
     }
 }

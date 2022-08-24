@@ -25,6 +25,7 @@ class MailjetService extends Service
                 ]
             ]
         ];
+
         $this->getMalilJet()->post(Resources::$Email, ['body' => $body]);
     }
 

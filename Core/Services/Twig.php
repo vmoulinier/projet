@@ -4,10 +4,20 @@ namespace Core\Services;
 
 use App\Entity\Advert;
 use App\Entity\User;
+use App\Model\UserRepository;
 use Core\Config\Config;
 
 class Twig extends Config
 {
+
+    private $services;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->services = new Services();
+    }
+
 
     public function getCurrentUser(): ?User
     {
@@ -105,5 +115,16 @@ class Twig extends Config
         }
 
         return '';
+    }
+
+    public function getQteCategorie(int $id): int
+    {
+        return count($this->entityManager->getRepository('App\Entity\Advert')->findBy(['category' => $id]));
+    }
+
+    public function getQteLocation(int $postcode): int
+    {
+        /** @var UserRepository */
+        return $this->services->getRepository('user')->findAllActiveAdvertByLocation($postcode);
     }
 }

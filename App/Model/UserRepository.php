@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+
 class UserRepository extends Repository
 {
 
@@ -30,5 +32,16 @@ class UserRepository extends Repository
             ->groupBy('u.postCode')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findAllActiveAdvertByLocation(int $postcode)
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('res', 'res');
+
+        $query = $this->services->getEntityManager()->createNativeQuery("SELECT COUNT(DISTINCT a.id) AS res FROM user AS u JOIN advert AS a ON a.user_id = u.id WHERE u.postCode = :postcode", $rsm);
+        $query->setParameter(':postcode', $postcode);
+
+        return $query->getResult()[0]['res'];
     }
 }

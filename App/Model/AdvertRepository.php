@@ -16,10 +16,12 @@ class  AdvertRepository extends Repository
             ->getResult();
     }
 
-    public function search(?string $name, ?string $category, ?string $location, $price, $limit = null, $start = null): array
+    public function search(?string $name, ?string $category, ?string $location, $price, $limit = null, $start = null, int $type = 1): array
     {
         $queryBuilder = $this->entityRepository->createQueryBuilder('a');
-        $res = $queryBuilder->select('a')->where('a.status = :status');
+        $res = $queryBuilder->select('a')
+            ->where('a.status = :status')
+            ->andWhere('a.type = :type');
 
         if ($name) {
             $res->andWhere('a.title LIKE :name')
@@ -49,6 +51,8 @@ class  AdvertRepository extends Repository
                 ->setMaxResults($limit);
         }
 
-        return $res->orderBy('a.id', 'DESC')->setParameter(':status', Advert::STATUS_ACTIVE)->getQuery()->getResult();
+        return $res->orderBy('a.id', 'DESC')
+            ->setParameter(':status', Advert::STATUS_ACTIVE)
+            ->setParameter(':type', $type)->getQuery()->getResult();
     }
 }

@@ -264,4 +264,9 @@ class User
 
         return $transactionRates;
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->getType() === 'ROLE_ADMIN';
+    }
 }
